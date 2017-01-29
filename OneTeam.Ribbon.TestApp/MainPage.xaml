@@ -8,8 +8,7 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ribbon:Ribbon VerticalAlignment="Top"
-                       SelectedIndex="0">
+        <ribbon:Ribbon SelectedIndex="0" Title="OneTeam.Ribbon.TestApp" VerticalAlignment="Top">
             <ribbon:RibbonTab Header="Tab 1">
                 <Rectangle Height="100" Fill="Red"/>
             </ribbon:RibbonTab>

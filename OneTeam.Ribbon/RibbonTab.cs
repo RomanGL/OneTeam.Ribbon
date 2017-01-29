@@ -3,7 +3,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace OneTeam.Ribbon
 {
-    public class RibbonTab : ContentControl
+    public sealed class RibbonTab : ContentControl
     {
         public RibbonTab()
         {

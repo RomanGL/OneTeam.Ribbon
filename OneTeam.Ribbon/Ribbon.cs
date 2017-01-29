@@ -3,8 +3,10 @@ using Windows.UI.Xaml.Controls;
 
 namespace OneTeam.Ribbon
 {
-    public class Ribbon : ItemsControl
+    public sealed class Ribbon : ItemsControl
     {
+        private ListView headersListView;
+
         public Ribbon()
         {
             DefaultStyleKey = typeof(Ribbon);
@@ -28,14 +30,23 @@ namespace OneTeam.Ribbon
         public static readonly DependencyProperty SelectedItemProperty =
             DependencyProperty.Register(nameof(SelectedItem), typeof(object), typeof(Ribbon), new PropertyMetadata(null));
 
+        public string Title
+        {
+            get { return (string)GetValue(TitleProperty); }
+            set { SetValue(TitleProperty, value); }
+        }
+
+        public static readonly DependencyProperty TitleProperty =
+            DependencyProperty.Register(nameof(Title), typeof(string), typeof(Ribbon), new PropertyMetadata(null));
+
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
-            _headersListView = GetTemplateChild("HeadersListView") as ListView;
+            headersListView = GetTemplateChild("HeadersListView") as ListView;
 
-            _headersListView.ItemsSource = Items;
-            _headersListView.ItemClick += HeadersListView_ItemClick;
+            headersListView.ItemsSource = Items;
+            headersListView.ItemClick += HeadersListView_ItemClick;
         }
 
         private void HeadersListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -52,7 +63,5 @@ namespace OneTeam.Ribbon
             var ribbon = (Ribbon)obj;
             ribbon.SelectedItem = ribbon.Items[newIndex];
         }
-
-        private ListView _headersListView;
     }
 }

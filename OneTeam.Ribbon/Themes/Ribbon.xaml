@@ -1,6 +1,5 @@
 ﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:local="using:OneTeam.Ribbon">
 
     <Style TargetType="local:Ribbon">
@@ -10,10 +9,14 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <ListView x:Name="HeadersListView"
+                        <local:RibbonTitleBar Title="{TemplateBinding Title}"/>
+
+                        <ListView Grid.Row="1"
+                                  Name="HeadersListView"
                                   IsItemClickEnabled="True">
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -28,7 +31,7 @@
                             </ListView.ItemTemplate>
                         </ListView>
 
-                        <ContentPresenter Grid.Row="1" 
+                        <ContentPresenter Grid.Row="2" 
                                           Content="{TemplateBinding SelectedItem}"/>
                     </Grid>
                 </ControlTemplate>
