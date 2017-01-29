@@ -2,7 +2,6 @@
     x:Class="OneTeam.Ribbon.TestApp.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:OneTeam.Ribbon.TestApp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ribbon="using:OneTeam.Ribbon"
@@ -15,11 +14,10 @@
                 <Rectangle Height="100" Fill="Red"/>
             </ribbon:RibbonTab>
             <ribbon:RibbonTab Header="Tab 2">
-                <Rectangle Height="100" Fill="Blue" />
+                <Rectangle Height="100" Fill="Blue"/>
             </ribbon:RibbonTab>
             <ribbon:RibbonTab Header="Tab 3">
-                <Rectangle Height="100"
-                           Fill="Yellow" />
+                <Rectangle Height="100" Fill="Yellow"/>
             </ribbon:RibbonTab>
         </ribbon:Ribbon>
     </Grid>

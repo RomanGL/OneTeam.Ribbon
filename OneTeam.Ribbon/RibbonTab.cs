@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace OneTeam.Ribbon
@@ -12,7 +7,7 @@ namespace OneTeam.Ribbon
     {
         public RibbonTab()
         {
-            this.DefaultStyleKey = typeof(RibbonTab);
+            DefaultStyleKey = typeof(RibbonTab);
         }
 
         public string Header
@@ -22,6 +17,6 @@ namespace OneTeam.Ribbon
         }
 
         public static readonly DependencyProperty HeaderProperty =
-            DependencyProperty.Register("Header", typeof(string), typeof(RibbonTab), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Header), typeof(string), typeof(RibbonTab), new PropertyMetadata(null));
     }
 }

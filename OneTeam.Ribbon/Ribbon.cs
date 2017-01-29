@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Markup;
 
 namespace OneTeam.Ribbon
 {
@@ -14,7 +7,7 @@ namespace OneTeam.Ribbon
     {
         public Ribbon()
         {
-            this.DefaultStyleKey = typeof(Ribbon);
+            DefaultStyleKey = typeof(Ribbon);
         }
         
         public int SelectedIndex
@@ -24,16 +17,16 @@ namespace OneTeam.Ribbon
         }
         
         public static readonly DependencyProperty SelectedIndexProperty =
-            DependencyProperty.Register("SelectedIndex", typeof(int), typeof(Ribbon), new PropertyMetadata(-1, OnSelectedIndexChanged));
+            DependencyProperty.Register(nameof(SelectedIndex), typeof(int), typeof(Ribbon), new PropertyMetadata(-1, OnSelectedIndexChanged));
         
         public object SelectedItem
         {
-            get { return (object)GetValue(SelectedItemProperty); }
+            get { return GetValue(SelectedItemProperty); }
             set { SetValue(SelectedItemProperty, value); }
         }
         
         public static readonly DependencyProperty SelectedItemProperty =
-            DependencyProperty.Register("SelectedItem", typeof(object), typeof(Ribbon), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(SelectedItem), typeof(object), typeof(Ribbon), new PropertyMetadata(null));
 
         protected override void OnApplyTemplate()
         {
@@ -52,7 +45,7 @@ namespace OneTeam.Ribbon
 
         private static void OnSelectedIndexChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            int newIndex = (int) e.NewValue;
+            int newIndex = (int)e.NewValue;
             if (newIndex < 0)
                 return;
 
