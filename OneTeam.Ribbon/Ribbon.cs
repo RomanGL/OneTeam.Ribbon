@@ -1,5 +1,8 @@
-﻿using Windows.ApplicationModel;
+﻿using System;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
+using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -12,6 +15,8 @@ namespace OneTeam.Ribbon
     {
         private Rectangle backgroundElement;
         private ListView headersListView;
+
+        private bool isWindowDeactivated;
 
         public Ribbon()
         {
@@ -70,27 +75,29 @@ namespace OneTeam.Ribbon
             if (!DesignMode.DesignModeEnabled)
             {
                 Window.Current.SetTitleBar(backgroundElement);
-                UpdateTitleBar();
+
+                UpdateTitleBarBackground();
+                UpdateTitleBarForeground();
                 UpdateExtendIntoTitleBar();
+
                 headersListView.ItemClick += HeadersListView_ItemClick;
-
-                RegisterPropertyChangedCallback(BackgroundProperty, OnBackgroundChanged);
-                Background.RegisterPropertyChangedCallback(SolidColorBrush.ColorProperty, OnBackgroundChanged);
+                Window.Current.Activated += Window_Activated;
             }
+
+            RegisterPropertyChangedCallback(BackgroundProperty, OnBackgroundPropertyChanged);
+            RegisterPropertyChangedCallback(ForegroundProperty, OnForegroundPropertyChanged);
+
+            Background?.RegisterPropertyChangedCallback(SolidColorBrush.ColorProperty, OnBackgroundPropertyChanged);
+            Foreground?.RegisterPropertyChangedCallback(SolidColorBrush.ColorProperty, OnForegroundPropertyChanged);
         }
 
-        private static void OnForegroundPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private void Window_Activated(object sender, WindowActivatedEventArgs e)
         {
-            if (e.NewValue == null)
-                return;
-
-            ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.ForegroundColor = titleBar.ButtonForegroundColor =
-                titleBar.ButtonHoverForegroundColor = titleBar.ButtonPressedForegroundColor =
-                    titleBar.InactiveBackgroundColor = titleBar.ButtonInactiveBackgroundColor = ((SolidColorBrush)e.NewValue).Color;
+            isWindowDeactivated = e.WindowActivationState == CoreWindowActivationState.Deactivated;
+            UpdateTitleBarForeground();
         }
 
-        private void UpdateTitleBar()
+        private void UpdateTitleBarBackground()
         {
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;
 
@@ -111,12 +118,58 @@ namespace OneTeam.Ribbon
             }
         }
 
+        private void UpdateTitleBarForeground()
+        {
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+
+            var brush = Foreground as SolidColorBrush;
+            if (brush == null)
+            {
+                titleBar.ForegroundColor = null;
+                titleBar.ButtonForegroundColor = null;
+            }
+            else
+            {
+                titleBar.ForegroundColor = brush.Color;
+                titleBar.ButtonForegroundColor = brush.Color;
+            }
+        }
+
+        private void UpdateTabsForeground()
+        {
+            var brush = Foreground as SolidColorBrush;
+            if (brush == null)
+                return;
+
+            foreach (var item in Items)
+            {
+                var control = item as Control;
+                if (control == null)
+                    continue;
+
+                control.Foreground = brush;
+            }
+        }
+
         private void UpdateExtendIntoTitleBar()
         {
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = ExtendIntoTitleBar;
         }
 
-        private void OnBackgroundChanged(DependencyObject sender, DependencyProperty dp) => UpdateTitleBar();
+        private void OnBackgroundPropertyChanged(DependencyObject sender, DependencyProperty dp)
+        {
+            if (!DesignMode.DesignModeEnabled)
+                UpdateTitleBarBackground();
+        }
+
+        private void OnForegroundPropertyChanged(DependencyObject sender, DependencyProperty dp)
+        {
+            if (!DesignMode.DesignModeEnabled)
+                UpdateTitleBarForeground();
+
+            UpdateTabsForeground();
+        }
+
         private void HeadersListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             SelectedIndex = Items.IndexOf(e.ClickedItem);

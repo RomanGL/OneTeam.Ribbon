@@ -3,6 +3,7 @@
     xmlns:local="using:OneTeam.Ribbon">
 
     <Style TargetType="local:RibbonTab">
+        <Setter Property="Foreground" Value="White"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:RibbonTab">

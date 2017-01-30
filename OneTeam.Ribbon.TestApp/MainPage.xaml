@@ -6,11 +6,8 @@
       xmlns:ribbon="using:OneTeam.Ribbon"
       mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-        </Grid.RowDefinitions>
-
-        <ribbon:Ribbon Background="LightGray"
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ribbon:Ribbon Background="#FF2B579A"
                        Foreground="White"
                        Title="OneTeam.Ribbon.TestApp"
                        x:Name="ribbon">
@@ -31,8 +28,12 @@
         </ribbon:Ribbon>
         
         <Button Content="Change background color"
-                Grid.Row="1" 
                 HorizontalAlignment="Center"
-                Click="Button_Click" />
-    </Grid>
+                Click="ChangeBackgroundButtonClick"
+                Margin="0,20,0,0" />
+        <Button Content="Change foreground color"
+                HorizontalAlignment="Center"
+                Click="ChangeForegroundButtonClick"
+                Margin="0,20,0,0" />
+    </StackPanel>
 </Page>

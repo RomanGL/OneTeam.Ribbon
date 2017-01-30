@@ -10,15 +10,24 @@ namespace OneTeam.Ribbon.TestApp
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void ChangeBackgroundButtonClick(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            //TestBackgroundStoryboard.Begin();
             var color = ((SolidColorBrush)ribbon.Background).Color;
             color.R += 20;
             color.G += 5;
             color.B -= 10;
 
             ((SolidColorBrush) ribbon.Background).Color = color;
+        }
+
+        private void ChangeForegroundButtonClick(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var color = ((SolidColorBrush)ribbon.Foreground).Color;
+            color.R += 20;
+            color.G += 5;
+            color.B -= 10;
+
+            ((SolidColorBrush)ribbon.Foreground).Color = color;
         }
     }
 }
