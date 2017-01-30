@@ -12,18 +12,23 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
-        <ribbon:Ribbon Background="LightYellow" Title="OneTeam.Ribbon.TestApp">
+
+        <ribbon:Ribbon Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                       Foreground="White"
+                       Title="OneTeam.Ribbon.TestApp">
             <ribbon:RibbonTab Header="Tab 1">
-                <Rectangle Height="100" Fill="Red"/>
+                <Rectangle Height="100"
+                           Fill="Red"/>
             </ribbon:RibbonTab>
             
             <ribbon:RibbonTab Header="Tab 2">
-                <Rectangle Height="100" Fill="Blue"/>
+                <Rectangle Height="100"
+                           Fill="Blue"/>
             </ribbon:RibbonTab>
             
             <ribbon:RibbonTab Header="Tab 3">
-                <Rectangle Height="100" Fill="Yellow"/>
+                <Rectangle Height="100"
+                           Fill="Yellow"/>
             </ribbon:RibbonTab>
         </ribbon:Ribbon>
     </Grid>

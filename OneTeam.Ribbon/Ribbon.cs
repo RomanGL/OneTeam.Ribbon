@@ -16,6 +16,12 @@ namespace OneTeam.Ribbon
             DefaultStyleKey = typeof(Ribbon);
         }
 
+        public static readonly new DependencyProperty BackgroundProperty = DependencyProperty.RegisterAttached(nameof(Background),
+            typeof(SolidColorBrush), typeof(Ribbon), new PropertyMetadata(null, OnBackgroundPropertyChanged));
+
+        public static readonly new DependencyProperty ForegroundProperty = DependencyProperty.RegisterAttached(nameof(Foreground),
+            typeof(SolidColorBrush), typeof(Ribbon), new PropertyMetadata(null, OnForegroundPropertyChanged));
+
         public int SelectedIndex
         {
             get { return (int)GetValue(SelectedIndexProperty); }
@@ -53,13 +59,27 @@ namespace OneTeam.Ribbon
             headersListView = (ListView)GetTemplateChild(nameof(headersListView));
             headersListView.ItemsSource = Items;
             headersListView.ItemClick += HeadersListView_ItemClick;
+        }
 
-            if (Background == null)
+        private static void OnBackgroundPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue == null)
                 return;
 
             ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
             titleBar.BackgroundColor = titleBar.InactiveBackgroundColor =
-                titleBar.ButtonBackgroundColor = titleBar.ButtonInactiveBackgroundColor = ((SolidColorBrush)Background).Color;
+                titleBar.ButtonBackgroundColor = titleBar.ButtonInactiveBackgroundColor = ((SolidColorBrush)e.NewValue).Color;
+        }
+
+        private static void OnForegroundPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue == null)
+                return;
+
+            ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.ForegroundColor = titleBar.ButtonForegroundColor =
+                titleBar.ButtonHoverForegroundColor = titleBar.ButtonPressedForegroundColor =
+                    titleBar.InactiveBackgroundColor = titleBar.ButtonInactiveBackgroundColor = ((SolidColorBrush)e.NewValue).Color;
         }
 
         private void HeadersListView_ItemClick(object sender, ItemClickEventArgs e)
