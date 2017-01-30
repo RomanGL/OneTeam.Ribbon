@@ -11,29 +11,23 @@
                        Foreground="White"
                        Title="OneTeam.Ribbon.TestApp"
                        x:Name="ribbon">
-            <ribbon:RibbonTab Header="Tab 1">
-                <Rectangle Height="100"
-                           Fill="Red" />
+            <ribbon:RibbonTab Header="Settings">
+                <StackPanel>
+                    <Button Content="Change background color"
+                            HorizontalAlignment="Center"
+                            Click="ChangeBackgroundButtonClick"/>
+                    <Button Content="Change foreground color"
+                            HorizontalAlignment="Center"
+                            Click="ChangeForegroundButtonClick"
+                            Margin="0,12,0,0" />
+                </StackPanel>
             </ribbon:RibbonTab>
 
             <ribbon:RibbonTab Header="Tab 2">
-                <Rectangle Height="100"
-                           Fill="Blue" />
             </ribbon:RibbonTab>
 
             <ribbon:RibbonTab Header="Tab 3">
-                <Rectangle Height="100"
-                           Fill="Yellow" />
             </ribbon:RibbonTab>
         </ribbon:Ribbon>
-        
-        <Button Content="Change background color"
-                HorizontalAlignment="Center"
-                Click="ChangeBackgroundButtonClick"
-                Margin="0,20,0,0" />
-        <Button Content="Change foreground color"
-                HorizontalAlignment="Center"
-                Click="ChangeForegroundButtonClick"
-                Margin="0,20,0,0" />
     </StackPanel>
 </Page>

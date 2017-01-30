@@ -1,5 +1,7 @@
-﻿using Windows.ApplicationModel;
+﻿using System.Runtime.CompilerServices;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
+using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -16,6 +18,7 @@ namespace OneTeam.Ribbon
         private CoreApplicationViewTitleBar coreTitleBar;
         private RibbonTitleBar ribbonTitleBar;
         private Grid placeholder;
+        private FrameworkElement tabContentPresenter;
 
         private bool isWindowDeactivated;
 
@@ -65,7 +68,7 @@ namespace OneTeam.Ribbon
         public static readonly DependencyProperty SelectedIndexProperty =
             DependencyProperty.Register(nameof(SelectedIndex), typeof(int), 
                 typeof(Ribbon), new PropertyMetadata(-1, OnSelectedIndexChanged));
-
+        
         public static readonly DependencyProperty SelectedItemProperty =
             DependencyProperty.Register(nameof(SelectedItem), typeof(object), 
                 typeof(Ribbon), new PropertyMetadata(null));
@@ -73,6 +76,12 @@ namespace OneTeam.Ribbon
         public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register(nameof(Title), typeof(string), 
                 typeof(Ribbon), new PropertyMetadata(null));
+
+        protected override Size MeasureOverride(Size availableSize)
+        {
+            availableSize.Height = Window.Current.Bounds.Height;
+            return base.MeasureOverride(availableSize);
+        }
 
         protected override void OnApplyTemplate()
         {
@@ -82,9 +91,15 @@ namespace OneTeam.Ribbon
             headersListView = GetTemplateChild("headersListView") as ListView;
             ribbonTitleBar = GetTemplateChild("ribbonTitleBar") as RibbonTitleBar;
             placeholder = GetTemplateChild("placeholder") as Grid;
+            tabContentPresenter = GetTemplateChild("tabContentPresenter") as FrameworkElement;
 
             headersListView.ItemsSource = Items;
-            
+
+            if (Items?.Count > 0)
+                SelectedIndex = 0;
+
+            InvalidateMeasure();
+
             if (!DesignMode.DesignModeEnabled)
             {
                 Window.Current.SetTitleBar(backgroundElement);
@@ -187,6 +202,11 @@ namespace OneTeam.Ribbon
             }
         }
 
+        private void UpdateSelectedIndex()
+        {
+            SelectedItem = SelectedIndex < 0 ? null : Items?[SelectedIndex];
+        }
+
         private void UpdateExtendIntoTitleBar()
         {
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = ExtendIntoTitleBar;
@@ -214,11 +234,7 @@ namespace OneTeam.Ribbon
         private static void OnSelectedIndexChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var ribbon = obj as Ribbon;
-            if (ribbon == null)
-                return;
-
-            int newIndex = (int)e.NewValue;
-            ribbon.SelectedItem = newIndex < 0 ? null : ribbon.Items[newIndex];
+            ribbon?.UpdateSelectedIndex();
         }
 
         private static void OnExtendIntoTitleBarChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

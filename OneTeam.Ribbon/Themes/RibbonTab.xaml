@@ -4,13 +4,16 @@
 
     <Style TargetType="local:RibbonTab">
         <Setter Property="Foreground" Value="White" />
+        <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundChromeMediumBrush}"/>
+        <Setter Property="MinHeight" Value="100"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:RibbonTab">
-                    <Grid>
+                    <Border Background="{TemplateBinding Background}"
+                            Padding="12">
                         <ContentPresenter Content="{TemplateBinding Content}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}" />
-                    </Grid>
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -3,15 +3,28 @@
                     xmlns:local="using:OneTeam.Ribbon">
 
     <Style TargetType="local:Ribbon">
+        <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:Ribbon">
-                    <Grid>
+                    <Grid x:Name="RootGrid">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
+
+                        <ContentPresenter Grid.Row="2"
+                                          Content="{Binding SelectedItem, RelativeSource={RelativeSource TemplatedParent}}"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          x:Name="tabContentPresenter">
+                            <ContentPresenter.ContentTransitions>
+                                <TransitionCollection>
+                                    <ContentThemeTransition HorizontalOffset="0"
+                                                            VerticalOffset="-50"/>
+                                </TransitionCollection>
+                            </ContentPresenter.ContentTransitions>
+                        </ContentPresenter>
 
                         <Grid Background="{TemplateBinding Background}"
                               Grid.RowSpan="2"
@@ -39,14 +52,11 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Header}"
-                                               Foreground="{Binding Foreground}" />
+                                               Foreground="{Binding Foreground}" 
+                                               HorizontalAlignment="Center" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-
-                        <ContentPresenter Grid.Row="2"
-                                          Content="{TemplateBinding SelectedItem}" 
-                                          Foreground="{TemplateBinding Foreground}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
