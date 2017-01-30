@@ -1,4 +1,6 @@
-﻿using Windows.UI.ViewManagement;
+﻿using Windows.ApplicationModel;
+using Windows.ApplicationModel.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -16,29 +18,17 @@ namespace OneTeam.Ribbon
             DefaultStyleKey = typeof(Ribbon);
         }
 
-        public static readonly new DependencyProperty BackgroundProperty = DependencyProperty.RegisterAttached(nameof(Background),
-            typeof(SolidColorBrush), typeof(Ribbon), new PropertyMetadata(null, OnBackgroundPropertyChanged));
-
-        public static readonly new DependencyProperty ForegroundProperty = DependencyProperty.RegisterAttached(nameof(Foreground),
-            typeof(SolidColorBrush), typeof(Ribbon), new PropertyMetadata(null, OnForegroundPropertyChanged));
-
         public int SelectedIndex
         {
             get { return (int)GetValue(SelectedIndexProperty); }
             set { SetValue(SelectedIndexProperty, value); }
         }
         
-        public static readonly DependencyProperty SelectedIndexProperty =
-            DependencyProperty.Register(nameof(SelectedIndex), typeof(int), typeof(Ribbon), new PropertyMetadata(-1, OnSelectedIndexChanged));
-        
         public object SelectedItem
         {
             get { return GetValue(SelectedItemProperty); }
             set { SetValue(SelectedItemProperty, value); }
         }
-        
-        public static readonly DependencyProperty SelectedItemProperty =
-            DependencyProperty.Register(nameof(SelectedItem), typeof(object), typeof(Ribbon), new PropertyMetadata(null));
 
         public string Title
         {
@@ -46,29 +36,47 @@ namespace OneTeam.Ribbon
             set { SetValue(TitleProperty, value); }
         }
 
+        public bool ExtendIntoTitleBar
+        {
+            get { return (bool)GetValue(ExtendIntoTitleBarProperty); }
+            set { SetValue(ExtendIntoTitleBarProperty, value); }
+        }
+        
+        public static readonly DependencyProperty ExtendIntoTitleBarProperty =
+            DependencyProperty.Register(nameof(ExtendIntoTitleBar), typeof(bool), 
+                typeof(Ribbon), new PropertyMetadata(true, OnExtendIntoTitleBarChanged));
+
+        public static readonly DependencyProperty SelectedIndexProperty =
+            DependencyProperty.Register(nameof(SelectedIndex), typeof(int), 
+                typeof(Ribbon), new PropertyMetadata(-1, OnSelectedIndexChanged));
+
+        public static readonly DependencyProperty SelectedItemProperty =
+            DependencyProperty.Register(nameof(SelectedItem), typeof(object), 
+                typeof(Ribbon), new PropertyMetadata(null));
+
         public static readonly DependencyProperty TitleProperty =
-            DependencyProperty.Register(nameof(Title), typeof(string), typeof(Ribbon), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Title), typeof(string), 
+                typeof(Ribbon), new PropertyMetadata(null));
 
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
-            backgroundElement = (Rectangle)GetTemplateChild(nameof(backgroundElement));
-            Window.Current.SetTitleBar(backgroundElement);
+            backgroundElement = GetTemplateChild("backgroundElement") as Rectangle;
+            headersListView = GetTemplateChild("headersListView") as ListView;
 
-            headersListView = (ListView)GetTemplateChild(nameof(headersListView));
             headersListView.ItemsSource = Items;
-            headersListView.ItemClick += HeadersListView_ItemClick;
-        }
+            
+            if (!DesignMode.DesignModeEnabled)
+            {
+                Window.Current.SetTitleBar(backgroundElement);
+                UpdateTitleBar();
+                UpdateExtendIntoTitleBar();
+                headersListView.ItemClick += HeadersListView_ItemClick;
 
-        private static void OnBackgroundPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue == null)
-                return;
-
-            ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.BackgroundColor = titleBar.InactiveBackgroundColor =
-                titleBar.ButtonBackgroundColor = titleBar.ButtonInactiveBackgroundColor = ((SolidColorBrush)e.NewValue).Color;
+                RegisterPropertyChangedCallback(BackgroundProperty, OnBackgroundChanged);
+                Background.RegisterPropertyChangedCallback(SolidColorBrush.ColorProperty, OnBackgroundChanged);
+            }
         }
 
         private static void OnForegroundPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -82,6 +90,33 @@ namespace OneTeam.Ribbon
                     titleBar.InactiveBackgroundColor = titleBar.ButtonInactiveBackgroundColor = ((SolidColorBrush)e.NewValue).Color;
         }
 
+        private void UpdateTitleBar()
+        {
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+
+            var brush = Background as SolidColorBrush;
+            if (brush == null)
+            {
+                titleBar.BackgroundColor = null;
+                titleBar.InactiveBackgroundColor = null;
+                titleBar.ButtonBackgroundColor = null;
+                titleBar.ButtonInactiveBackgroundColor = null;
+            }
+            else
+            {
+                titleBar.BackgroundColor = brush.Color;
+                titleBar.InactiveBackgroundColor = brush.Color;
+                titleBar.ButtonBackgroundColor = brush.Color;
+                titleBar.ButtonInactiveBackgroundColor = brush.Color;
+            }
+        }
+
+        private void UpdateExtendIntoTitleBar()
+        {
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = ExtendIntoTitleBar;
+        }
+
+        private void OnBackgroundChanged(DependencyObject sender, DependencyProperty dp) => UpdateTitleBar();
         private void HeadersListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             SelectedIndex = Items.IndexOf(e.ClickedItem);
@@ -89,12 +124,18 @@ namespace OneTeam.Ribbon
 
         private static void OnSelectedIndexChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            int newIndex = (int)e.NewValue;
-            if (newIndex < 0)
+            var ribbon = obj as Ribbon;
+            if (ribbon == null)
                 return;
 
-            var ribbon = (Ribbon)obj;
-            ribbon.SelectedItem = ribbon.Items[newIndex];
+            int newIndex = (int)e.NewValue;
+            ribbon.SelectedItem = newIndex < 0 ? null : ribbon.Items[newIndex];
+        }
+
+        private static void OnExtendIntoTitleBarChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ribbon = d as Ribbon;
+            ribbon?.UpdateExtendIntoTitleBar();
         }
     }
 }

@@ -17,6 +17,7 @@ namespace OneTeam.Ribbon
         }
 
         public static readonly DependencyProperty HeaderProperty =
-            DependencyProperty.Register(nameof(Header), typeof(string), typeof(RibbonTab), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Header), typeof(string), 
+                typeof(RibbonTab), new PropertyMetadata(null));
     }
 }

@@ -1,4 +1,5 @@
-﻿using Windows.ApplicationModel.Core;
+﻿using Windows.ApplicationModel;
+using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -7,14 +8,13 @@ namespace OneTeam.Ribbon
 {
     public sealed class RibbonTitleBar : Control
     {
-        private Grid titleBar, leftMask, rightMask;
+        private Grid titleBar;
+        private Grid leftMask;
+        private Grid rightMask;
 
         public RibbonTitleBar()
         {
             DefaultStyleKey = typeof(RibbonTitleBar);
-
-            Window.Current.Activated += Current_Activated;
-            CoreApplication.GetCurrentView().TitleBar.LayoutMetricsChanged += TitleBar_LayoutMetricsChanged;
         }
 
         public string Title
@@ -24,15 +24,22 @@ namespace OneTeam.Ribbon
         }
 
         public static readonly DependencyProperty TitleProperty =
-            DependencyProperty.Register(nameof(Title), typeof(string), typeof(RibbonTitleBar), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Title), typeof(string), 
+                typeof(RibbonTitleBar), new PropertyMetadata(default(string)));
 
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
-            titleBar = (Grid)GetTemplateChild(nameof(titleBar));
-            leftMask = (Grid)GetTemplateChild(nameof(leftMask));
-            rightMask = (Grid)GetTemplateChild(nameof(rightMask));
+            titleBar = GetTemplateChild("titleBar") as Grid;
+            leftMask = GetTemplateChild("leftMask") as Grid;
+            rightMask = GetTemplateChild("rightMask") as Grid;
+            
+            if (!DesignMode.DesignModeEnabled)
+            {
+                Window.Current.Activated += Current_Activated;
+                CoreApplication.GetCurrentView().TitleBar.LayoutMetricsChanged += TitleBar_LayoutMetricsChanged;
+            }
         }
 
         private void Current_Activated(object sender, WindowActivatedEventArgs e)

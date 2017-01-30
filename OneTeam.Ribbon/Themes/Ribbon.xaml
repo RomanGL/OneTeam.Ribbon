@@ -1,6 +1,5 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:local="using:OneTeam.Ribbon">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:local="using:OneTeam.Ribbon">
 
     <Style TargetType="local:Ribbon">
         <Setter Property="Template">
@@ -8,16 +7,21 @@
                 <ControlTemplate TargetType="local:Ribbon">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition/>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <Grid Background="{TemplateBinding Background}" Grid.RowSpan="2" Height="80"/>
+                        <Grid Background="{TemplateBinding Background}"
+                              Grid.RowSpan="2"
+                              Height="80" />
 
-                        <local:RibbonTitleBar Title="{TemplateBinding Title}"/>
+                        <local:RibbonTitleBar Title="{TemplateBinding Title}" />
 
-                        <Rectangle Name="backgroundElement" Grid.RowSpan="2" Height="80" Fill="Transparent"/>
+                        <Rectangle Name="backgroundElement"
+                                   Grid.RowSpan="2"
+                                   Height="80"
+                                   Fill="Transparent" />
 
                         <ListView Grid.Row="1"
                                   Name="headersListView"
@@ -25,19 +29,19 @@
                                   HorizontalAlignment="Left">
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal"/>
+                                    <StackPanel Orientation="Horizontal" />
                                 </ItemsPanelTemplate>
                             </ListView.ItemsPanel>
 
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Header}"/>
+                                    <TextBlock Text="{Binding Header}" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
 
-                        <ContentPresenter Grid.Row="2" 
-                                          Content="{TemplateBinding SelectedItem}"/>
+                        <ContentPresenter Grid.Row="2"
+                                          Content="{TemplateBinding SelectedItem}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

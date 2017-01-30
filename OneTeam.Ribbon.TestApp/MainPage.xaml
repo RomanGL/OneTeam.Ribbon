@@ -1,35 +1,38 @@
-﻿<ribbon:RibbonPage
-    x:Class="OneTeam.Ribbon.TestApp.MainPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ribbon="using:OneTeam.Ribbon"
-    mc:Ignorable="d">
+﻿<Page x:Class="OneTeam.Ribbon.TestApp.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:ribbon="using:OneTeam.Ribbon"
+      mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <ribbon:Ribbon Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+        <ribbon:Ribbon Background="LightGray"
                        Foreground="White"
-                       Title="OneTeam.Ribbon.TestApp">
+                       Title="OneTeam.Ribbon.TestApp"
+                       x:Name="ribbon">
             <ribbon:RibbonTab Header="Tab 1">
                 <Rectangle Height="100"
-                           Fill="Red"/>
+                           Fill="Red" />
             </ribbon:RibbonTab>
-            
+
             <ribbon:RibbonTab Header="Tab 2">
                 <Rectangle Height="100"
-                           Fill="Blue"/>
+                           Fill="Blue" />
             </ribbon:RibbonTab>
-            
+
             <ribbon:RibbonTab Header="Tab 3">
                 <Rectangle Height="100"
-                           Fill="Yellow"/>
+                           Fill="Yellow" />
             </ribbon:RibbonTab>
         </ribbon:Ribbon>
+        
+        <Button Content="Change background color"
+                Grid.Row="1" 
+                HorizontalAlignment="Center"
+                Click="Button_Click" />
     </Grid>
-</ribbon:RibbonPage>
+</Page>
