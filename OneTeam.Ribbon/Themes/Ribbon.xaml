@@ -15,9 +15,12 @@
 
                         <local:RibbonTitleBar Title="{TemplateBinding Title}"/>
 
+                        <Rectangle Name="backgroundElement" Grid.RowSpan="2" Height="80" Fill="Transparent"/>
+
                         <ListView Grid.Row="1"
-                                  Name="HeadersListView"
-                                  IsItemClickEnabled="True">
+                                  Name="headersListView"
+                                  IsItemClickEnabled="True"
+                                  HorizontalAlignment="Left">
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Orientation="Horizontal"/>

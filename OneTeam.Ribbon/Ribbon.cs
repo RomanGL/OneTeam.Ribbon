@@ -1,10 +1,12 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Shapes;
 
 namespace OneTeam.Ribbon
 {
     public sealed class Ribbon : ItemsControl
     {
+        private Rectangle backgroundElement;
         private ListView headersListView;
 
         public Ribbon()
@@ -43,8 +45,10 @@ namespace OneTeam.Ribbon
         {
             base.OnApplyTemplate();
 
-            headersListView = GetTemplateChild("HeadersListView") as ListView;
+            backgroundElement = (Rectangle)GetTemplateChild(nameof(backgroundElement));
+            Window.Current.SetTitleBar(backgroundElement);
 
+            headersListView = (ListView)GetTemplateChild(nameof(headersListView));
             headersListView.ItemsSource = Items;
             headersListView.ItemClick += HeadersListView_ItemClick;
         }

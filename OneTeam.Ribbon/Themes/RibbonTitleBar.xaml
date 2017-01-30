@@ -7,12 +7,20 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:RibbonTitleBar">
-                    <Grid Height="32">
-                        <Rectangle Name="backgroundElement"/>
+                    <Grid Height="32" Name="titleBar">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
-                        <TextBlock Name="title"
+                        <Grid Name="leftMask"/>
+
+                        <TextBlock Name="title" Grid.Column="1"
                                    Text="{TemplateBinding Title}"
                                    Style="{ThemeResource RibbonTitleTextBlockStyle}"/>
+
+                        <Grid Name="rightMask" Grid.Column="2"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
