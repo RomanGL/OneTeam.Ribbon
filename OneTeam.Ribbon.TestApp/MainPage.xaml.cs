@@ -17,7 +17,7 @@ namespace OneTeam.Ribbon.TestApp
             color.G += 5;
             color.B -= 10;
 
-            ((SolidColorBrush) ribbon.Background).Color = color;
+            ((SolidColorBrush)ribbon.Background).Color = color;
         }
 
         private void ChangeForegroundButtonClick(object sender, Windows.UI.Xaml.RoutedEventArgs e)

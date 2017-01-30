@@ -2,8 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="ms-appx:///OneTeam.Ribbon/Themes/Ribbon.xaml"/>
-        <ResourceDictionary Source="ms-appx:///OneTeam.Ribbon/Themes/RibbonTab.xaml"/>
-        <ResourceDictionary Source="ms-appx:///OneTeam.Ribbon/Themes/RibbonTitleBar.xaml"/>
+        <ResourceDictionary Source="ms-appx:///OneTeam.Ribbon/Themes/Ribbon.xaml" />
+        <ResourceDictionary Source="ms-appx:///OneTeam.Ribbon/Themes/RibbonTab.xaml" />
+        <ResourceDictionary Source="ms-appx:///OneTeam.Ribbon/Themes/RibbonTitleBar.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

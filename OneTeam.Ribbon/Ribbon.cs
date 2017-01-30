@@ -1,7 +1,5 @@
-﻿using System;
-using Windows.ApplicationModel;
+﻿using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
-using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -15,6 +13,9 @@ namespace OneTeam.Ribbon
     {
         private Rectangle backgroundElement;
         private ListView headersListView;
+        private CoreApplicationViewTitleBar coreTitleBar;
+        private RibbonTitleBar ribbonTitleBar;
+        private Grid placeholder;
 
         private bool isWindowDeactivated;
 
@@ -46,10 +47,20 @@ namespace OneTeam.Ribbon
             get { return (bool)GetValue(ExtendIntoTitleBarProperty); }
             set { SetValue(ExtendIntoTitleBarProperty, value); }
         }
+
+        public bool IsTitleBarTabletModeVisible
+        {
+            get { return (bool)GetValue(IsTitleBarTabletModeVisibleProperty); }
+            set { SetValue(IsTitleBarTabletModeVisibleProperty, value); }
+        }
         
         public static readonly DependencyProperty ExtendIntoTitleBarProperty =
             DependencyProperty.Register(nameof(ExtendIntoTitleBar), typeof(bool), 
                 typeof(Ribbon), new PropertyMetadata(true, OnExtendIntoTitleBarChanged));
+
+        public static readonly DependencyProperty IsTitleBarTabletModeVisibleProperty =
+            DependencyProperty.Register(nameof(IsTitleBarTabletModeVisible), typeof(bool),
+                typeof(Ribbon), new PropertyMetadata(true, null));
 
         public static readonly DependencyProperty SelectedIndexProperty =
             DependencyProperty.Register(nameof(SelectedIndex), typeof(int), 
@@ -69,6 +80,8 @@ namespace OneTeam.Ribbon
 
             backgroundElement = GetTemplateChild("backgroundElement") as Rectangle;
             headersListView = GetTemplateChild("headersListView") as ListView;
+            ribbonTitleBar = GetTemplateChild("ribbonTitleBar") as RibbonTitleBar;
+            placeholder = GetTemplateChild("placeholder") as Grid;
 
             headersListView.ItemsSource = Items;
             
@@ -80,7 +93,11 @@ namespace OneTeam.Ribbon
                 UpdateTitleBarForeground();
                 UpdateExtendIntoTitleBar();
 
+                coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+                coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
+
                 headersListView.ItemClick += HeadersListView_ItemClick;
+
                 Window.Current.Activated += Window_Activated;
             }
 
@@ -89,6 +106,25 @@ namespace OneTeam.Ribbon
 
             Background?.RegisterPropertyChangedCallback(SolidColorBrush.ColorProperty, OnBackgroundPropertyChanged);
             Foreground?.RegisterPropertyChangedCallback(SolidColorBrush.ColorProperty, OnForegroundPropertyChanged);
+        }
+
+        private void CoreTitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
+        {
+            if (IsTitleBarTabletModeVisible)
+                return;
+
+            if (sender.IsVisible)
+            {
+                ribbonTitleBar.Visibility = Visibility.Visible;
+                placeholder.Height = 80;
+                backgroundElement.Height = 80;
+            }
+            else
+            {
+                ribbonTitleBar.Visibility = Visibility.Collapsed;
+                placeholder.Height = 44;
+                backgroundElement.Height = 44;
+            }
         }
 
         private void Window_Activated(object sender, WindowActivatedEventArgs e)

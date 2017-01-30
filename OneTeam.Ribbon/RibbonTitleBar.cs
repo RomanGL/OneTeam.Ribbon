@@ -11,6 +11,7 @@ namespace OneTeam.Ribbon
         private Grid titleBar;
         private Grid leftMask;
         private Grid rightMask;
+        private CoreApplicationViewTitleBar coreTitleBar;
 
         public RibbonTitleBar()
         {
@@ -37,8 +38,9 @@ namespace OneTeam.Ribbon
             
             if (!DesignMode.DesignModeEnabled)
             {
+                coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+                coreTitleBar.LayoutMetricsChanged += TitleBar_LayoutMetricsChanged;
                 Window.Current.Activated += Current_Activated;
-                CoreApplication.GetCurrentView().TitleBar.LayoutMetricsChanged += TitleBar_LayoutMetricsChanged;
             }
         }
 
