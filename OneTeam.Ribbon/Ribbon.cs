@@ -1,5 +1,7 @@
-﻿using Windows.UI.Xaml;
+﻿using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 
 namespace OneTeam.Ribbon
@@ -13,7 +15,7 @@ namespace OneTeam.Ribbon
         {
             DefaultStyleKey = typeof(Ribbon);
         }
-        
+
         public int SelectedIndex
         {
             get { return (int)GetValue(SelectedIndexProperty); }
@@ -51,6 +53,13 @@ namespace OneTeam.Ribbon
             headersListView = (ListView)GetTemplateChild(nameof(headersListView));
             headersListView.ItemsSource = Items;
             headersListView.ItemClick += HeadersListView_ItemClick;
+
+            if (Background == null)
+                return;
+
+            ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.BackgroundColor = titleBar.InactiveBackgroundColor =
+                titleBar.ButtonBackgroundColor = titleBar.ButtonInactiveBackgroundColor = ((SolidColorBrush)Background).Color;
         }
 
         private void HeadersListView_ItemClick(object sender, ItemClickEventArgs e)
