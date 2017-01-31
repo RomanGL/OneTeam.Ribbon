@@ -18,7 +18,7 @@ namespace OneTeam.Ribbon
         private RibbonTitleBar ribbonTitleBar;
         private Grid placeholder;
         private FrameworkElement tabContentPresenter;
-
+        private Visibility backButtonVisibility;
         private bool isWindowDeactivated;
 
         public Ribbon()
@@ -96,6 +96,8 @@ namespace OneTeam.Ribbon
         {
             base.OnApplyTemplate();
 
+            backButtonVisibility = BackButtonVisibility;
+
             backgroundElement = GetTemplateChild("backgroundElement") as Rectangle;
             headersListView = GetTemplateChild("headersListView") as ListView;
             ribbonTitleBar = GetTemplateChild("ribbonTitleBar") as RibbonTitleBar;
@@ -134,6 +136,8 @@ namespace OneTeam.Ribbon
 
         private void CoreTitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
         {
+            BackButtonVisibility = sender.IsVisible ? backButtonVisibility : Visibility.Collapsed;
+
             if (IsTitleBarTabletModeVisible)
                 return;
 
