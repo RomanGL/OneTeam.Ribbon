@@ -28,6 +28,16 @@ namespace OneTeam.Ribbon
             DependencyProperty.Register(nameof(Title), typeof(string), 
                 typeof(RibbonTitleBar), new PropertyMetadata(default(string)));
 
+        public Visibility BackButtonVisibility
+        {
+            get { return (Visibility)GetValue(BackButtonVisibilityProperty); }
+            set { SetValue(BackButtonVisibilityProperty, value); }
+        }
+
+        public static readonly DependencyProperty BackButtonVisibilityProperty =
+            DependencyProperty.Register(nameof(BackButtonVisibility), typeof(Visibility),
+                typeof(RibbonTitleBar), new PropertyMetadata(Visibility.Collapsed));
+
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();

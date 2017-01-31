@@ -10,6 +10,7 @@
         <ribbon:Ribbon Background="#FF2B579A"
                        Foreground="White"
                        Title="OneTeam.Ribbon.TestApp"
+                       BackButtonVisibility="Visible"
                        x:Name="ribbon">
             <ribbon:RibbonTab Header="Settings">
                 <StackPanel>

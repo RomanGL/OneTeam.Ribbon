@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Windows.ApplicationModel;
+﻿using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.UI.Core;
@@ -56,7 +55,13 @@ namespace OneTeam.Ribbon
             get { return (bool)GetValue(IsTitleBarTabletModeVisibleProperty); }
             set { SetValue(IsTitleBarTabletModeVisibleProperty, value); }
         }
-        
+
+        public Visibility BackButtonVisibility
+        {
+            get { return (Visibility)GetValue(BackButtonVisibilityProperty); }
+            set { SetValue(BackButtonVisibilityProperty, value); }
+        }
+
         public static readonly DependencyProperty ExtendIntoTitleBarProperty =
             DependencyProperty.Register(nameof(ExtendIntoTitleBar), typeof(bool), 
                 typeof(Ribbon), new PropertyMetadata(true, OnExtendIntoTitleBarChanged));
@@ -76,6 +81,10 @@ namespace OneTeam.Ribbon
         public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register(nameof(Title), typeof(string), 
                 typeof(Ribbon), new PropertyMetadata(null));
+
+        public static readonly DependencyProperty BackButtonVisibilityProperty =
+            DependencyProperty.Register(nameof(BackButtonVisibility), typeof(Visibility),
+                typeof(Ribbon), new PropertyMetadata(Visibility.Collapsed));
 
         protected override Size MeasureOverride(Size availableSize)
         {
