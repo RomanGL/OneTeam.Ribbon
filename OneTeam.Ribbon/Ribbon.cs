@@ -15,7 +15,7 @@ namespace OneTeam.Ribbon
         private Rectangle backgroundElement;
         private ListView headersListView;
         private CoreApplicationViewTitleBar coreTitleBar;
-        private RibbonTitleBar ribbonTitleBar;
+        private TitleBar ribbonTitleBar;
         private Grid placeholder;
         private FrameworkElement tabContentPresenter;
         private Visibility backButtonVisibility;
@@ -100,7 +100,7 @@ namespace OneTeam.Ribbon
 
             backgroundElement = GetTemplateChild("backgroundElement") as Rectangle;
             headersListView = GetTemplateChild("headersListView") as ListView;
-            ribbonTitleBar = GetTemplateChild("ribbonTitleBar") as RibbonTitleBar;
+            ribbonTitleBar = GetTemplateChild("ribbonTitleBar") as TitleBar;
             placeholder = GetTemplateChild("placeholder") as Grid;
             tabContentPresenter = GetTemplateChild("tabContentPresenter") as FrameworkElement;
 

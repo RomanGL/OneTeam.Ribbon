@@ -111,7 +111,7 @@
     <Compile Include="QuickAccessToolbarButton.cs" />
     <Compile Include="Ribbon.cs" />
     <Compile Include="RibbonTab.cs" />
-    <Compile Include="RibbonTitleBar.cs" />
+    <Compile Include="TitleBar.cs" />
     <EmbeddedResource Include="Properties\OneTeam.Ribbon.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -135,7 +135,7 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Themes\RibbonTitleBar.xaml">
+    <Page Include="Themes\TitleBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

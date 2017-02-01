@@ -6,37 +6,17 @@ using Windows.UI.Xaml.Controls;
 
 namespace OneTeam.Ribbon
 {
-    public sealed class RibbonTitleBar : Control
+    public sealed class TitleBar : Control
     {
         private Grid titleBar;
         private Grid leftMask;
         private Grid rightMask;
         private CoreApplicationViewTitleBar coreTitleBar;
 
-        public RibbonTitleBar()
+        public TitleBar()
         {
-            DefaultStyleKey = typeof(RibbonTitleBar);
+            DefaultStyleKey = typeof(TitleBar);
         }
-
-        public string Title
-        {
-            get { return (string)GetValue(TitleProperty); }
-            set { SetValue(TitleProperty, value); }
-        }
-
-        public static readonly DependencyProperty TitleProperty =
-            DependencyProperty.Register(nameof(Title), typeof(string), 
-                typeof(RibbonTitleBar), new PropertyMetadata(default(string)));
-
-        public Visibility BackButtonVisibility
-        {
-            get { return (Visibility)GetValue(BackButtonVisibilityProperty); }
-            set { SetValue(BackButtonVisibilityProperty, value); }
-        }
-
-        public static readonly DependencyProperty BackButtonVisibilityProperty =
-            DependencyProperty.Register(nameof(BackButtonVisibility), typeof(Visibility),
-                typeof(RibbonTitleBar), new PropertyMetadata(Visibility.Collapsed));
 
         protected override void OnApplyTemplate()
         {

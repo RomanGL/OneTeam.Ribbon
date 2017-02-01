@@ -8,13 +8,19 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:Ribbon">
                     <Grid x:Name="RootGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <ContentPresenter Grid.Row="2"
+                        <ContentPresenter Grid.ColumnSpan="2"
+                                          Grid.Row="2"
                                           Content="{Binding SelectedItem, RelativeSource={RelativeSource TemplatedParent}}"
                                           Foreground="{TemplateBinding Foreground}"
                                           x:Name="tabContentPresenter">
@@ -27,20 +33,30 @@
                         </ContentPresenter>
 
                         <Grid Background="{TemplateBinding Background}"
+                              Grid.ColumnSpan="2"
                               Grid.RowSpan="2"
                               Height="80"
                               Name="placeholder"/>
 
+                        <TextBlock Name="title"
+                                   Grid.Column="1"
+                                   Text="{TemplateBinding Title}"
+                                   Style="{ThemeResource RibbonTitleTextBlockStyle}" />
+
                         <Rectangle Name="backgroundElement"
+                                   Grid.Column="1"
                                    Grid.RowSpan="2"
                                    Height="80"
                                    Fill="Transparent" />
 
-                        <local:RibbonTitleBar x:Name="ribbonTitleBar"
-                                              Title="{TemplateBinding Title}"
-                                              BackButtonVisibility="{TemplateBinding BackButtonVisibility}"/>
+                        <local:QuickAccessToolbarButton Style="{ThemeResource BackButtonStyle}"
+                                                        Visibility="{TemplateBinding BackButtonVisibility}" />
 
-                        <ListView Grid.Row="1"
+                        <local:TitleBar x:Name="ribbonTitleBar"
+                                        Grid.ColumnSpan="2"/>
+
+                        <ListView Grid.ColumnSpan="2"
+                                  Grid.Row="1"
                                   Name="headersListView"
                                   IsItemClickEnabled="True"
                                   HorizontalAlignment="Left"
@@ -63,5 +79,23 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="RibbonTitleTextBlockStyle"
+           TargetType="TextBlock">
+        <Setter Property="CharacterSpacing"
+                Value="10" />
+        <Setter Property="FontSize"
+                Value="12" />
+        <Setter Property="Margin"
+                Value="12,0,0,0" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+    </Style>
+
+    <Style TargetType="local:QuickAccessToolbarButton"
+           x:Key="BackButtonStyle">
+        <Setter Property="Content"
+                Value="&#xE0A6;" />
     </Style>
 </ResourceDictionary>

@@ -5,6 +5,6 @@
         <ResourceDictionary Source="ms-appx:///OneTeam.Ribbon/Themes/QuickAccessToolbarButton.xaml" />
         <ResourceDictionary Source="ms-appx:///OneTeam.Ribbon/Themes/Ribbon.xaml" />
         <ResourceDictionary Source="ms-appx:///OneTeam.Ribbon/Themes/RibbonTab.xaml" />
-        <ResourceDictionary Source="ms-appx:///OneTeam.Ribbon/Themes/RibbonTitleBar.xaml" />
+        <ResourceDictionary Source="ms-appx:///OneTeam.Ribbon/Themes/TitleBar.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
