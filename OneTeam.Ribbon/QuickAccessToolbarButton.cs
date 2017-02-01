@@ -1,8 +1,8 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml.Controls.Primitives;
 
 namespace OneTeam.Ribbon
 {
-    public class QuickAccessToolbarButton : ContentControl
+    public class QuickAccessToolbarButton : ButtonBase
     {
         public QuickAccessToolbarButton()
         {

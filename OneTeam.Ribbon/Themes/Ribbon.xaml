@@ -10,6 +10,7 @@
                     <Grid x:Name="RootGrid">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         
@@ -19,7 +20,7 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <ContentPresenter Grid.ColumnSpan="2"
+                        <ContentPresenter Grid.ColumnSpan="3"
                                           Grid.Row="2"
                                           Content="{Binding SelectedItem, RelativeSource={RelativeSource TemplatedParent}}"
                                           Foreground="{TemplateBinding Foreground}"
@@ -33,30 +34,34 @@
                         </ContentPresenter>
 
                         <Grid Background="{TemplateBinding Background}"
-                              Grid.ColumnSpan="2"
+                              Grid.ColumnSpan="3"
                               Grid.RowSpan="2"
                               Height="80"
                               Name="placeholder"/>
 
                         <TextBlock Name="title"
-                                   Grid.Column="1"
+                                   Grid.Column="2"
                                    Text="{TemplateBinding Title}"
                                    Style="{ThemeResource RibbonTitleTextBlockStyle}" />
 
                         <Rectangle Name="backgroundElement"
-                                   Grid.Column="1"
+                                   Grid.Column="2"
                                    Grid.RowSpan="2"
                                    Height="80"
                                    Fill="Transparent" />
 
                         <local:QuickAccessToolbarButton x:Name="backButton"
+                                                        ToolTipService.ToolTip="Назад"
                                                         Style="{ThemeResource BackButtonStyle}"
                                                         Visibility="{TemplateBinding BackButtonVisibility}" />
 
-                        <local:TitleBar x:Name="titleBar"
-                                        Grid.ColumnSpan="2"/>
+                        <ContentPresenter Content="{TemplateBinding QuickAccessToolbar}"
+                                          Grid.Column="1" />
 
-                        <ListView Grid.ColumnSpan="2"
+                        <local:TitleBar x:Name="titleBar"
+                                        Grid.ColumnSpan="3"/>
+
+                        <ListView Grid.ColumnSpan="3"
                                   Grid.Row="1"
                                   Name="headersListView"
                                   IsItemClickEnabled="True"

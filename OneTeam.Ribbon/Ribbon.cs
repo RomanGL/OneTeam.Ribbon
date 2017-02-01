@@ -64,6 +64,12 @@ namespace OneTeam.Ribbon
             set { SetValue(BackButtonVisibilityProperty, value); }
         }
 
+        public QuickAccessToolbar QuickAccessToolbar
+        {
+            get { return (QuickAccessToolbar)GetValue(QuickAccessToolbarProperty); }
+            set { SetValue(QuickAccessToolbarProperty, value); }
+        }
+
         public static readonly DependencyProperty ExtendIntoTitleBarProperty =
             DependencyProperty.Register(nameof(ExtendIntoTitleBar), typeof(bool), 
                 typeof(Ribbon), new PropertyMetadata(true, OnExtendIntoTitleBarChanged));
@@ -87,6 +93,10 @@ namespace OneTeam.Ribbon
         public static readonly DependencyProperty BackButtonVisibilityProperty =
             DependencyProperty.Register(nameof(BackButtonVisibility), typeof(Visibility),
                 typeof(Ribbon), new PropertyMetadata(Visibility.Collapsed));
+
+        public static readonly DependencyProperty QuickAccessToolbarProperty =
+            DependencyProperty.Register(nameof(QuickAccessToolbar), typeof(QuickAccessToolbar),
+                typeof(Ribbon), new PropertyMetadata(null));
 
         protected override Size MeasureOverride(Size availableSize)
         {

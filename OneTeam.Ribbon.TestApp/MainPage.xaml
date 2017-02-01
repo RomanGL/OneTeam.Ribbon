@@ -10,8 +10,18 @@
         <ribbon:Ribbon Background="#FF2B579A"
                        Foreground="White"
                        Title="OneTeam.Ribbon.TestApp"
-                       BackButtonVisibility="Visible"
                        x:Name="ribbon">
+            <ribbon:Ribbon.QuickAccessToolbar>
+                <ribbon:QuickAccessToolbar>
+                    <ribbon:QuickAccessToolbarButton Content="&#xE74E;"
+                                                     ToolTipService.ToolTip="Сохранить (Ctrl+S)" />
+                    <ribbon:QuickAccessToolbarButton Content="&#xE7A7;"
+                                                     ToolTipService.ToolTip="Отменить (Ctrl+Z)" />
+                    <ribbon:QuickAccessToolbarButton Content="&#xE7A6;"
+                                                     ToolTipService.ToolTip="Вернуть (Ctrl+Y)" />
+                </ribbon:QuickAccessToolbar>
+            </ribbon:Ribbon.QuickAccessToolbar>
+            
             <ribbon:RibbonTab Header="Settings">
                 <StackPanel>
                     <Button Content="Change background color"
