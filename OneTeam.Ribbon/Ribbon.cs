@@ -15,8 +15,10 @@ namespace OneTeam.Ribbon
         private Rectangle backgroundElement;
         private ListView headersListView;
         private CoreApplicationViewTitleBar coreTitleBar;
-        private TitleBar ribbonTitleBar;
+        private TitleBar titleBar;
+        private TextBlock title;
         private Grid placeholder;
+        private QuickAccessToolbarButton backButton;
         private FrameworkElement tabContentPresenter;
         private Visibility backButtonVisibility;
         private bool isWindowDeactivated;
@@ -98,11 +100,13 @@ namespace OneTeam.Ribbon
 
             backButtonVisibility = BackButtonVisibility;
 
-            backgroundElement = GetTemplateChild("backgroundElement") as Rectangle;
-            headersListView = GetTemplateChild("headersListView") as ListView;
-            ribbonTitleBar = GetTemplateChild("ribbonTitleBar") as TitleBar;
-            placeholder = GetTemplateChild("placeholder") as Grid;
-            tabContentPresenter = GetTemplateChild("tabContentPresenter") as FrameworkElement;
+            backgroundElement = GetTemplateChild(nameof(backgroundElement)) as Rectangle;
+            headersListView = GetTemplateChild(nameof(headersListView)) as ListView;
+            titleBar = GetTemplateChild(nameof(titleBar)) as TitleBar;
+            title = GetTemplateChild(nameof(title)) as TextBlock;
+            placeholder = GetTemplateChild(nameof(placeholder)) as Grid;
+            backButton = GetTemplateChild(nameof(backButton)) as QuickAccessToolbarButton;
+            tabContentPresenter = GetTemplateChild(nameof(tabContentPresenter)) as FrameworkElement;
 
             headersListView.ItemsSource = Items;
 
@@ -143,13 +147,13 @@ namespace OneTeam.Ribbon
 
             if (sender.IsVisible)
             {
-                ribbonTitleBar.Visibility = Visibility.Visible;
+                titleBar.Visibility = Visibility.Visible;
                 placeholder.Height = 80;
                 backgroundElement.Height = 80;
             }
             else
             {
-                ribbonTitleBar.Visibility = Visibility.Collapsed;
+                titleBar.Visibility = Visibility.Collapsed;
                 placeholder.Height = 44;
                 backgroundElement.Height = 44;
             }
@@ -158,6 +162,18 @@ namespace OneTeam.Ribbon
         private void Window_Activated(object sender, WindowActivatedEventArgs e)
         {
             isWindowDeactivated = e.WindowActivationState == CoreWindowActivationState.Deactivated;
+
+            if (e.WindowActivationState != CoreWindowActivationState.Deactivated)
+            {
+                title.Opacity = 1;
+                backButton.Opacity = 1;
+            }
+            else
+            {
+                title.Opacity = 0.5;
+                backButton.Opacity = 0.5;
+            }
+
             UpdateTitleBarForeground();
         }
 

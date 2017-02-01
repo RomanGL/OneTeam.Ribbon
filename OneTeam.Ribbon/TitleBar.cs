@@ -30,13 +30,7 @@ namespace OneTeam.Ribbon
             {
                 coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
                 coreTitleBar.LayoutMetricsChanged += TitleBar_LayoutMetricsChanged;
-                Window.Current.Activated += Current_Activated;
             }
-        }
-
-        private void Current_Activated(object sender, WindowActivatedEventArgs e)
-        {
-            titleBar.Opacity = e.WindowActivationState != CoreWindowActivationState.Deactivated ? 1 : 0.5;
         }
 
         private void TitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)

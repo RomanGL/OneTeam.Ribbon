@@ -49,10 +49,11 @@
                                    Height="80"
                                    Fill="Transparent" />
 
-                        <local:QuickAccessToolbarButton Style="{ThemeResource BackButtonStyle}"
+                        <local:QuickAccessToolbarButton x:Name="backButton"
+                                                        Style="{ThemeResource BackButtonStyle}"
                                                         Visibility="{TemplateBinding BackButtonVisibility}" />
 
-                        <local:TitleBar x:Name="ribbonTitleBar"
+                        <local:TitleBar x:Name="titleBar"
                                         Grid.ColumnSpan="2"/>
 
                         <ListView Grid.ColumnSpan="2"
