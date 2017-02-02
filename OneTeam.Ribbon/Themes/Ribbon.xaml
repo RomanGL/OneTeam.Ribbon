@@ -55,7 +55,8 @@
                                                         Style="{ThemeResource BackButtonStyle}"
                                                         Visibility="{TemplateBinding BackButtonVisibility}" />
 
-                        <ContentPresenter Content="{TemplateBinding QuickAccessToolbar}"
+                        <ContentPresenter x:Name="quickAccessToolbar"
+                                          Content="{TemplateBinding QuickAccessToolbar}"
                                           Grid.Column="1" />
 
                         <local:TitleBar x:Name="titleBar"

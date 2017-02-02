@@ -1,6 +1,7 @@
 ﻿using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -22,6 +23,7 @@ namespace OneTeam.Ribbon
         private FrameworkElement tabContentPresenter;
         private Visibility backButtonVisibility;
         private bool isWindowDeactivated;
+        private ContentPresenter quickAccessToolbar;
 
         public Ribbon()
         {
@@ -117,6 +119,7 @@ namespace OneTeam.Ribbon
             placeholder = GetTemplateChild(nameof(placeholder)) as Grid;
             backButton = GetTemplateChild(nameof(backButton)) as QuickAccessToolbarButton;
             tabContentPresenter = GetTemplateChild(nameof(tabContentPresenter)) as FrameworkElement;
+            quickAccessToolbar = GetTemplateChild(nameof(quickAccessToolbar)) as ContentPresenter;
 
             headersListView.ItemsSource = Items;
 
@@ -177,11 +180,13 @@ namespace OneTeam.Ribbon
             {
                 title.Opacity = 1;
                 backButton.Opacity = 1;
+                quickAccessToolbar.Opacity = 1;
             }
             else
             {
                 title.Opacity = 0.5;
                 backButton.Opacity = 0.5;
+                quickAccessToolbar.Opacity = 0.5;
             }
 
             UpdateTitleBarForeground();
@@ -222,6 +227,15 @@ namespace OneTeam.Ribbon
             {
                 titleBar.ForegroundColor = brush.Color;
                 titleBar.ButtonForegroundColor = brush.Color;
+
+                if (titleBar.BackgroundColor.HasValue)
+                {
+                    Color color = titleBar.BackgroundColor.Value;
+                    titleBar.ButtonInactiveForegroundColor = Color.FromArgb(255,
+                        (byte)((brush.Color.R + color.R) / 2),
+                        (byte)((brush.Color.G + color.G) / 2),
+                        (byte)((brush.Color.B + color.B) / 2));
+                }
             }
         }
 

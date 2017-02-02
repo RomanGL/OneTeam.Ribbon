@@ -7,7 +7,7 @@
       mc:Ignorable="d">
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ribbon:Ribbon Background="#FF2B579A"
+        <ribbon:Ribbon Background="{ThemeResource SystemControlBackgroundAccentBrush}"
                        Foreground="White"
                        Title="OneTeam.Ribbon.TestApp"
                        x:Name="ribbon">
