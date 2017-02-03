@@ -56,7 +56,7 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid"
                                                                        Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0"
-                                                                    Value="{ThemeResource SystemAccentColorLight1}" />
+                                                                    Value="{ThemeResource SystemControlHighlightListLowBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid"
                                                                        Storyboard.TargetProperty="Opacity">
@@ -75,7 +75,7 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid"
                                                                        Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0"
-                                                                    Value="{ThemeResource SystemAccentColorLight2}" />
+                                                                    Value="{ThemeResource SystemControlHighlightListMediumBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
                                                                        Storyboard.TargetProperty="BorderBrush">

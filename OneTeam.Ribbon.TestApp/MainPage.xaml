@@ -22,22 +22,22 @@
                 </ribbon:QuickAccessToolbar>
             </ribbon:Ribbon.QuickAccessToolbar>
             
-            <ribbon:RibbonTab Header="Settings">
+            <ribbon:RibbonTab Header="Файл">
+            </ribbon:RibbonTab>
+
+            <ribbon:RibbonTab Header="Главная">
+            </ribbon:RibbonTab>
+
+            <ribbon:RibbonTab Header="Вид">
                 <StackPanel>
                     <Button Content="Change background color"
                             HorizontalAlignment="Center"
-                            Click="ChangeBackgroundButtonClick"/>
+                            Click="ChangeBackgroundButtonClick" />
                     <Button Content="Change foreground color"
                             HorizontalAlignment="Center"
                             Click="ChangeForegroundButtonClick"
                             Margin="0,12,0,0" />
                 </StackPanel>
-            </ribbon:RibbonTab>
-
-            <ribbon:RibbonTab Header="Tab 2">
-            </ribbon:RibbonTab>
-
-            <ribbon:RibbonTab Header="Tab 3">
             </ribbon:RibbonTab>
         </ribbon:Ribbon>
     </StackPanel>

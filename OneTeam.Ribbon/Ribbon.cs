@@ -221,7 +221,7 @@ namespace OneTeam.Ribbon
             if (brush == null)
             {
                 titleBar.ForegroundColor = null;
-                titleBar.ButtonForegroundColor = null;
+                titleBar.ButtonForegroundColor = Colors.Red;
             }
             else
             {
@@ -239,7 +239,7 @@ namespace OneTeam.Ribbon
             }
         }
 
-        private void UpdateTabsForeground()
+        private void UpdateTabsForeground(int selectedIndex)
         {
             var brush = Foreground as SolidColorBrush;
             if (brush == null)
@@ -252,6 +252,18 @@ namespace OneTeam.Ribbon
                     continue;
 
                 control.Foreground = brush;
+            }
+
+            for (int i = 0; i < Items.Count; i++)
+            {
+                var control = Items[i] as Control;
+                if (control == null)
+                    continue;
+
+                control.Foreground = brush;
+
+                if (selectedIndex == i)
+                    control.Foreground = Background;
             }
         }
 
@@ -276,12 +288,13 @@ namespace OneTeam.Ribbon
             if (!DesignMode.DesignModeEnabled)
                 UpdateTitleBarForeground();
 
-            UpdateTabsForeground();
+            UpdateTabsForeground(0);
         }
 
         private void HeadersListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             SelectedIndex = Items.IndexOf(e.ClickedItem);
+            UpdateTabsForeground(SelectedIndex);
         }
 
         private static void OnSelectedIndexChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
