@@ -2,7 +2,7 @@
 
 namespace OneTeam.Ribbon
 {
-    public class QuickAccessToolbarButton : ButtonBase
+    public sealed class QuickAccessToolbarButton : ButtonBase
     {
         public QuickAccessToolbarButton()
         {

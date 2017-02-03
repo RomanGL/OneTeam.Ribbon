@@ -21,9 +21,12 @@
                                                      ToolTipService.ToolTip="Вернуть (Ctrl+Y)" />
                 </ribbon:QuickAccessToolbar>
             </ribbon:Ribbon.QuickAccessToolbar>
-            
-            <ribbon:RibbonTab Header="Файл">
-            </ribbon:RibbonTab>
+
+            <ribbon:Ribbon.Menu>
+                <ribbon:Backstage>
+                    
+                </ribbon:Backstage>
+            </ribbon:Ribbon.Menu>
 
             <ribbon:RibbonTab Header="Главная">
             </ribbon:RibbonTab>

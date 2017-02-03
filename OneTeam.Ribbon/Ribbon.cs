@@ -30,6 +30,12 @@ namespace OneTeam.Ribbon
             DefaultStyleKey = typeof(Ribbon);
         }
 
+        public Backstage Menu
+        {
+            get { return (Backstage)GetValue(MenuProperty); }
+            set { SetValue(MenuProperty, value); }
+        }
+
         public int SelectedIndex
         {
             get { return (int)GetValue(SelectedIndexProperty); }
@@ -71,6 +77,10 @@ namespace OneTeam.Ribbon
             get { return (QuickAccessToolbar)GetValue(QuickAccessToolbarProperty); }
             set { SetValue(QuickAccessToolbarProperty, value); }
         }
+
+        public static readonly DependencyProperty MenuProperty =
+            DependencyProperty.Register(nameof(Menu), typeof(Backstage),
+                typeof(Ribbon), new PropertyMetadata(null));
 
         public static readonly DependencyProperty ExtendIntoTitleBarProperty =
             DependencyProperty.Register(nameof(ExtendIntoTitleBar), typeof(bool), 

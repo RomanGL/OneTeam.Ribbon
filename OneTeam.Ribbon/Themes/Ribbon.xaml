@@ -33,12 +33,13 @@
                               Name="placeholder"/>
 
                         <TextBlock Name="title"
-                                   Grid.Column="2"
+                                   Grid.Column="1"
                                    Text="{TemplateBinding Title}"
                                    Style="{ThemeResource RibbonTitleTextBlockStyle}" />
 
                         <Rectangle Name="backgroundElement"
-                                   Grid.Column="2"
+                                   Grid.Column="1"
+                                   Grid.ColumnSpan="2"
                                    Grid.RowSpan="2"
                                    Height="80"
                                    Fill="Transparent" />
@@ -48,34 +49,43 @@
                                                         Style="{ThemeResource BackButtonStyle}"
                                                         Visibility="{TemplateBinding BackButtonVisibility}" />
 
-                        <ContentPresenter x:Name="quickAccessToolbar"
-                                          Content="{TemplateBinding QuickAccessToolbar}"
-                                          Grid.Column="1" />
+                        <ContentPresenter Name="quickAccessToolbar"
+                                          Content="{TemplateBinding QuickAccessToolbar}" />
 
                         <local:TitleBar x:Name="titleBar"
                                         Grid.ColumnSpan="3"/>
 
-                        <ListView Grid.ColumnSpan="3"
-                                  Grid.Row="1"
-                                  Name="headersListView"
-                                  IsItemClickEnabled="True"
-                                  HorizontalAlignment="Left"
-                                  ItemContainerStyle="{ThemeResource RibbonTabListViewItemStyle}"
-                                  Height="48">
-                            <ListView.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                            </ListView.ItemsPanel>
+                        <Grid Grid.Row="1"
+                              Grid.ColumnSpan="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            
+                            <local:MenuButton x:Name="menuButton"
+                                              Content="{TemplateBinding Menu}" />
 
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Header}"
-                                               Foreground="{Binding Foreground}" 
-                                               TextAlignment="Center"/>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                            <ListView Grid.Column="1"
+                                      Name="headersListView"
+                                      IsItemClickEnabled="True"
+                                      HorizontalAlignment="Left"
+                                      ItemContainerStyle="{ThemeResource RibbonTabListViewItemStyle}"
+                                      Height="48">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Header}"
+                                                   Foreground="{Binding Foreground}"
+                                                   TextAlignment="Center" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
