@@ -2,7 +2,7 @@
 
 namespace OneTeam.Ribbon
 {
-    public sealed class Backstage : Control
+    public sealed class Backstage : ContentControl
     {
         public Backstage()
         {

@@ -4,19 +4,6 @@
     xmlns:local="using:OneTeam.Ribbon">
 
     <Style TargetType="local:QuickAccessToolbarButton">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="local:QuickAccessToolbarButton">
-                    <Button Content="{TemplateBinding Content}"
-                            Foreground="{TemplateBinding Foreground}"
-                            Style="{ThemeResource QuickAccessToolbarButtonStyle}" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style TargetType="Button"
-           x:Key="QuickAccessToolbarButtonStyle">
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="BorderBrush"
@@ -27,18 +14,31 @@
                 Value="Left" />
         <Setter Property="VerticalAlignment"
                 Value="Center" />
-        <Setter Property="FontFamily"
-                Value="Segoe MDL2 Assets" />
         <Setter Property="FontSize"
                 Value="12" />
         <Setter Property="UseSystemFocusVisuals"
                 Value="True" />
+        <Setter Property="FontFamily"
+                Value="Segoe MDL2 Assets" />
         <Setter Property="Height"
                 Value="32" />
         <Setter Property="Width"
                 Value="48" />
         <Setter Property="Padding"
                 Value="8,4,8,4" />
+        <Setter Property="Style"
+                Value="{ThemeResource QuickAccessToolbarButtonStyle}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:QuickAccessToolbarButton">
+                    <Button Content="{TemplateBinding Content}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Button"
+           x:Key="QuickAccessToolbarButtonStyle">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">

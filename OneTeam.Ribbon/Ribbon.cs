@@ -1,4 +1,5 @@
-﻿using Windows.ApplicationModel;
+﻿using System;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.UI;
@@ -14,16 +15,24 @@ namespace OneTeam.Ribbon
     public sealed class Ribbon : ItemsControl
     {
         private Rectangle backgroundElement;
+        private Rectangle backstageBackgroundElement;
         private ListView headersListView;
         private CoreApplicationViewTitleBar coreTitleBar;
         private TitleBar titleBar;
+        private TitleBar backstageTitleBar;
         private TextBlock title;
+        private TextBlock backstageTitle;
         private Grid placeholder;
         private QuickAccessToolbarButton backButton;
+        private QuickAccessToolbarButton backstageBackButton;
         private FrameworkElement tabContentPresenter;
         private Visibility backButtonVisibility;
         private bool isWindowDeactivated;
         private ContentPresenter quickAccessToolbar;
+        private Button menuButton;
+        private Grid rootGrid;
+        private Grid backstageGrid;
+        private UIElement uiElement;
 
         public Ribbon()
         {
@@ -123,13 +132,20 @@ namespace OneTeam.Ribbon
             backButtonVisibility = BackButtonVisibility;
 
             backgroundElement = GetTemplateChild(nameof(backgroundElement)) as Rectangle;
+            backstageBackgroundElement = GetTemplateChild(nameof(backstageBackgroundElement)) as Rectangle;
             headersListView = GetTemplateChild(nameof(headersListView)) as ListView;
             titleBar = GetTemplateChild(nameof(titleBar)) as TitleBar;
             title = GetTemplateChild(nameof(title)) as TextBlock;
+            backstageTitle = GetTemplateChild(nameof(backstageTitle)) as TextBlock;
             placeholder = GetTemplateChild(nameof(placeholder)) as Grid;
             backButton = GetTemplateChild(nameof(backButton)) as QuickAccessToolbarButton;
+            backstageBackButton = GetTemplateChild(nameof(backstageBackButton)) as QuickAccessToolbarButton;
             tabContentPresenter = GetTemplateChild(nameof(tabContentPresenter)) as FrameworkElement;
             quickAccessToolbar = GetTemplateChild(nameof(quickAccessToolbar)) as ContentPresenter;
+            menuButton = GetTemplateChild(nameof(menuButton)) as Button;
+            rootGrid = GetTemplateChild(nameof(rootGrid)) as Grid;
+            backstageGrid = GetTemplateChild(nameof(backstageGrid)) as Grid;
+            backstageTitleBar = GetTemplateChild(nameof(backstageTitleBar)) as TitleBar;
 
             headersListView.ItemsSource = Items;
 
@@ -151,6 +167,9 @@ namespace OneTeam.Ribbon
 
                 headersListView.ItemClick += HeadersListView_ItemClick;
 
+                menuButton.Click += MenuButton_Click;
+                backstageBackButton.Click += BackstageBackButton_Click;
+
                 Window.Current.Activated += Window_Activated;
             }
 
@@ -159,6 +178,29 @@ namespace OneTeam.Ribbon
 
             Background?.RegisterPropertyChangedCallback(SolidColorBrush.ColorProperty, OnBackgroundPropertyChanged);
             Foreground?.RegisterPropertyChangedCallback(SolidColorBrush.ColorProperty, OnForegroundPropertyChanged);
+        }
+
+        private async void BackstageBackButton_Click(object sender, RoutedEventArgs e)
+        {
+            rootGrid.Visibility = Visibility.Visible;
+            backstageGrid.Visibility = Visibility.Collapsed;
+            Window.Current.SetTitleBar(backgroundElement);
+
+            var dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, (() =>
+            {
+                Window.Current.Content = uiElement;
+            }));
+        }
+
+        private void MenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            rootGrid.Visibility = Visibility.Collapsed;
+            backstageGrid.Visibility = Visibility.Visible;
+            Window.Current.SetTitleBar(backstageBackgroundElement);
+
+            uiElement = Window.Current.Content;
+            Window.Current.Content = this;
         }
 
         private void CoreTitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
@@ -189,13 +231,17 @@ namespace OneTeam.Ribbon
             if (e.WindowActivationState != CoreWindowActivationState.Deactivated)
             {
                 title.Opacity = 1;
+                backstageTitle.Opacity = 1;
                 backButton.Opacity = 1;
+                backstageBackButton.Opacity = 1;
                 quickAccessToolbar.Opacity = 1;
             }
             else
             {
                 title.Opacity = 0.5;
+                backstageTitle.Opacity = 0.5;
                 backButton.Opacity = 0.5;
+                backstageBackButton.Opacity = 0.5;
                 quickAccessToolbar.Opacity = 0.5;
             }
 

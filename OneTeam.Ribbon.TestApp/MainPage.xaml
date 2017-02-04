@@ -6,7 +6,12 @@
       xmlns:ribbon="using:OneTeam.Ribbon"
       mc:Ignorable="d">
 
-    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
         <ribbon:Ribbon Background="{ThemeResource SystemControlBackgroundAccentBrush}"
                        Foreground="White"
                        Title="OneTeam.Ribbon.TestApp"
@@ -24,7 +29,20 @@
 
             <ribbon:Ribbon.Menu>
                 <ribbon:Backstage>
-                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="320" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <ListView Background="{ThemeResource SystemControlHighlightListAccentHighBrush}">
+                            <TextBlock Text="Создать" />
+                            <TextBlock Text="Открыть" />
+                            <TextBlock Text="Сохранить" />
+                            <TextBlock Text="Сохранить как" />
+                            <TextBlock Text="Печать" />
+                        </ListView>
+                    </Grid>
                 </ribbon:Backstage>
             </ribbon:Ribbon.Menu>
 
@@ -43,5 +61,5 @@
                 </StackPanel>
             </ribbon:RibbonTab>
         </ribbon:Ribbon>
-    </StackPanel>
+    </Grid>
 </Page>
