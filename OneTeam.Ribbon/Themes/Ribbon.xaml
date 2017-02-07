@@ -71,6 +71,7 @@
                                           IsItemClickEnabled="True"
                                           HorizontalAlignment="Left"
                                           ItemContainerStyle="{ThemeResource RibbonTabListViewItemStyle}"
+                                          SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                           Height="48">
                                     <ListView.ItemsPanel>
                                         <ItemsPanelTemplate>

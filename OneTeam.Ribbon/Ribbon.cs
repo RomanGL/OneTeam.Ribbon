@@ -87,6 +87,16 @@ namespace OneTeam.Ribbon
             set { SetValue(QuickAccessToolbarProperty, value); }
         }
 
+        public bool IsMenuEnabled
+        {
+            get { return (bool)GetValue(IsMenuEnabledProperty); }
+            set { SetValue(IsMenuEnabledProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsMenuEnabledProperty =
+            DependencyProperty.Register(nameof(IsMenuEnabled), typeof(bool),
+                typeof(Ribbon), new PropertyMetadata(true, OnIsMenuButonEnabledChanged));
+
         public static readonly DependencyProperty MenuProperty =
             DependencyProperty.Register(nameof(Menu), typeof(Backstage),
                 typeof(Ribbon), new PropertyMetadata(null));
@@ -165,13 +175,14 @@ namespace OneTeam.Ribbon
                 coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
                 coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
 
-                headersListView.ItemClick += HeadersListView_ItemClick;
-
                 menuButton.Click += MenuButton_Click;
                 backstageBackButton.Click += BackstageBackButton_Click;
 
                 Window.Current.Activated += Window_Activated;
             }
+
+            UpdateMenuButton();
+            UpdateSelectedIndex();
 
             RegisterPropertyChangedCallback(BackgroundProperty, OnBackgroundPropertyChanged);
             RegisterPropertyChangedCallback(ForegroundProperty, OnForegroundPropertyChanged);
@@ -246,6 +257,14 @@ namespace OneTeam.Ribbon
             }
 
             UpdateTitleBarForeground();
+        }
+
+        private void UpdateMenuButton()
+        {
+            if (menuButton == null)
+                return;
+
+            menuButton.Visibility = IsMenuEnabled ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void UpdateTitleBarBackground()
@@ -326,6 +345,7 @@ namespace OneTeam.Ribbon
         private void UpdateSelectedIndex()
         {
             SelectedItem = SelectedIndex < 0 ? null : Items?[SelectedIndex];
+            UpdateTabsForeground(SelectedIndex);
         }
 
         private void UpdateExtendIntoTitleBar()
@@ -347,12 +367,6 @@ namespace OneTeam.Ribbon
             UpdateTabsForeground(0);
         }
 
-        private void HeadersListView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            SelectedIndex = Items.IndexOf(e.ClickedItem);
-            UpdateTabsForeground(SelectedIndex);
-        }
-
         private static void OnSelectedIndexChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var ribbon = obj as Ribbon;
@@ -363,6 +377,12 @@ namespace OneTeam.Ribbon
         {
             var ribbon = d as Ribbon;
             ribbon?.UpdateExtendIntoTitleBar();
+        }
+
+        private static void OnIsMenuButonEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ribbon = d as Ribbon;
+            ribbon?.UpdateMenuButton();
         }
     }
 }
