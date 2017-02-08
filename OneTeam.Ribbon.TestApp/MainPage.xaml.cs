@@ -1,4 +1,6 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using OneTeam.Ribbon.TestApp.Views;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
 namespace OneTeam.Ribbon.TestApp
@@ -10,7 +12,7 @@ namespace OneTeam.Ribbon.TestApp
             InitializeComponent();
         }
 
-        private void ChangeBackgroundButtonClick(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void ChangeBackgroundButtonClick(object sender, RoutedEventArgs e)
         {
             var color = ((SolidColorBrush)ribbon.Background).Color;
             color.R += 20;
@@ -20,7 +22,7 @@ namespace OneTeam.Ribbon.TestApp
             ((SolidColorBrush)ribbon.Background).Color = color;
         }
 
-        private void ChangeForegroundButtonClick(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void ChangeForegroundButtonClick(object sender, RoutedEventArgs e)
         {
             var color = ((SolidColorBrush)ribbon.Foreground).Color;
             color.R += 20;
@@ -28,6 +30,11 @@ namespace OneTeam.Ribbon.TestApp
             color.B -= 10;
 
             ((SolidColorBrush)ribbon.Foreground).Color = color;
+        }
+
+        private void RibbonFileClick(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(BackstageView));
         }
     }
 }

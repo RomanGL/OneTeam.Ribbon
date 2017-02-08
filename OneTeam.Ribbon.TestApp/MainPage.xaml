@@ -15,6 +15,7 @@
         <ribbon:Ribbon Background="{ThemeResource SystemControlBackgroundAccentBrush}"
                        Foreground="White"
                        Title="OneTeam.Ribbon.TestApp"
+                       FileClick="RibbonFileClick"
                        x:Name="ribbon">
             <ribbon:Ribbon.QuickAccessToolbar>
                 <ribbon:QuickAccessToolbar>
@@ -26,25 +27,6 @@
                                                      ToolTipService.ToolTip="Вернуть (Ctrl+Y)" />
                 </ribbon:QuickAccessToolbar>
             </ribbon:Ribbon.QuickAccessToolbar>
-
-            <ribbon:Ribbon.Menu>
-                <ribbon:Backstage>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="320" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-                        <ListView Background="{ThemeResource SystemControlHighlightListAccentHighBrush}">
-                            <TextBlock Text="Создать" />
-                            <TextBlock Text="Открыть" />
-                            <TextBlock Text="Сохранить" />
-                            <TextBlock Text="Сохранить как" />
-                            <TextBlock Text="Печать" />
-                        </ListView>
-                    </Grid>
-                </ribbon:Backstage>
-            </ribbon:Ribbon.Menu>
 
             <ribbon:RibbonTab Header="Главная">
             </ribbon:RibbonTab>

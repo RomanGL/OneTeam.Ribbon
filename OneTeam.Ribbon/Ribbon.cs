@@ -15,34 +15,29 @@ namespace OneTeam.Ribbon
     public sealed class Ribbon : ItemsControl
     {
         private Rectangle backgroundElement;
-        private Rectangle backstageBackgroundElement;
         private ListView headersListView;
         private CoreApplicationViewTitleBar coreTitleBar;
         private TitleBar titleBar;
-        private TitleBar backstageTitleBar;
         private TextBlock title;
-        private TextBlock backstageTitle;
         private Grid placeholder;
         private QuickAccessToolbarButton backButton;
-        private QuickAccessToolbarButton backstageBackButton;
         private FrameworkElement tabContentPresenter;
         private Visibility backButtonVisibility;
         private bool isWindowDeactivated;
         private ContentPresenter quickAccessToolbar;
         private Button menuButton;
-        private Grid rootGrid;
-        private Grid backstageGrid;
-        private UIElement uiElement;
 
         public Ribbon()
         {
             DefaultStyleKey = typeof(Ribbon);
         }
 
-        public Backstage Menu
+        public event RoutedEventHandler FileClick;
+
+        private void OnFileClick()
         {
-            get { return (Backstage)GetValue(MenuProperty); }
-            set { SetValue(MenuProperty, value); }
+            RoutedEventHandler eh = FileClick;
+            eh?.Invoke(this, new RoutedEventArgs());
         }
 
         public int SelectedIndex
@@ -97,10 +92,6 @@ namespace OneTeam.Ribbon
             DependencyProperty.Register(nameof(IsMenuEnabled), typeof(bool),
                 typeof(Ribbon), new PropertyMetadata(true, OnIsMenuButonEnabledChanged));
 
-        public static readonly DependencyProperty MenuProperty =
-            DependencyProperty.Register(nameof(Menu), typeof(Backstage),
-                typeof(Ribbon), new PropertyMetadata(null));
-
         public static readonly DependencyProperty ExtendIntoTitleBarProperty =
             DependencyProperty.Register(nameof(ExtendIntoTitleBar), typeof(bool), 
                 typeof(Ribbon), new PropertyMetadata(true, OnExtendIntoTitleBarChanged));
@@ -142,20 +133,16 @@ namespace OneTeam.Ribbon
             backButtonVisibility = BackButtonVisibility;
 
             backgroundElement = GetTemplateChild(nameof(backgroundElement)) as Rectangle;
-            backstageBackgroundElement = GetTemplateChild(nameof(backstageBackgroundElement)) as Rectangle;
             headersListView = GetTemplateChild(nameof(headersListView)) as ListView;
             titleBar = GetTemplateChild(nameof(titleBar)) as TitleBar;
             title = GetTemplateChild(nameof(title)) as TextBlock;
-            backstageTitle = GetTemplateChild(nameof(backstageTitle)) as TextBlock;
             placeholder = GetTemplateChild(nameof(placeholder)) as Grid;
             backButton = GetTemplateChild(nameof(backButton)) as QuickAccessToolbarButton;
-            backstageBackButton = GetTemplateChild(nameof(backstageBackButton)) as QuickAccessToolbarButton;
             tabContentPresenter = GetTemplateChild(nameof(tabContentPresenter)) as FrameworkElement;
             quickAccessToolbar = GetTemplateChild(nameof(quickAccessToolbar)) as ContentPresenter;
             menuButton = GetTemplateChild(nameof(menuButton)) as Button;
-            rootGrid = GetTemplateChild(nameof(rootGrid)) as Grid;
-            backstageGrid = GetTemplateChild(nameof(backstageGrid)) as Grid;
-            backstageTitleBar = GetTemplateChild(nameof(backstageTitleBar)) as TitleBar;
+
+            menuButton.Click += MenuButton_Click;
 
             headersListView.ItemsSource = Items;
 
@@ -175,9 +162,6 @@ namespace OneTeam.Ribbon
                 coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
                 coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
 
-                menuButton.Click += MenuButton_Click;
-                backstageBackButton.Click += BackstageBackButton_Click;
-
                 Window.Current.Activated += Window_Activated;
             }
 
@@ -191,27 +175,9 @@ namespace OneTeam.Ribbon
             Foreground?.RegisterPropertyChangedCallback(SolidColorBrush.ColorProperty, OnForegroundPropertyChanged);
         }
 
-        private async void BackstageBackButton_Click(object sender, RoutedEventArgs e)
-        {
-            rootGrid.Visibility = Visibility.Visible;
-            backstageGrid.Visibility = Visibility.Collapsed;
-            Window.Current.SetTitleBar(backgroundElement);
-
-            var dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, (() =>
-            {
-                Window.Current.Content = uiElement;
-            }));
-        }
-
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
-            rootGrid.Visibility = Visibility.Collapsed;
-            backstageGrid.Visibility = Visibility.Visible;
-            Window.Current.SetTitleBar(backstageBackgroundElement);
-
-            uiElement = Window.Current.Content;
-            Window.Current.Content = this;
+            OnFileClick();
         }
 
         private void CoreTitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
@@ -242,17 +208,13 @@ namespace OneTeam.Ribbon
             if (e.WindowActivationState != CoreWindowActivationState.Deactivated)
             {
                 title.Opacity = 1;
-                backstageTitle.Opacity = 1;
                 backButton.Opacity = 1;
-                backstageBackButton.Opacity = 1;
                 quickAccessToolbar.Opacity = 1;
             }
             else
             {
                 title.Opacity = 0.5;
-                backstageTitle.Opacity = 0.5;
                 backButton.Opacity = 0.5;
-                backstageBackButton.Opacity = 0.5;
                 quickAccessToolbar.Opacity = 0.5;
             }
 

@@ -7,126 +7,87 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:Ribbon">
                     <Grid>
-                        <Grid Name="rootGrid">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
 
-                            <ContentPresenter Grid.ColumnSpan="3"
-                                              Grid.Row="2"
-                                              Content="{Binding SelectedItem, RelativeSource={RelativeSource TemplatedParent}}"
-                                              Foreground="{TemplateBinding Foreground}"
-                                              x:Name="tabContentPresenter" />
+                        <ContentPresenter Grid.ColumnSpan="4"
+                                          Grid.Row="2"
+                                          Content="{Binding SelectedItem, RelativeSource={RelativeSource TemplatedParent}}"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          x:Name="tabContentPresenter" />
 
-                            <Grid Background="{TemplateBinding Background}"
-                                  Grid.ColumnSpan="3"
-                                  Grid.RowSpan="2"
-                                  Height="80"
-                                  Name="placeholder" />
+                        <Grid Background="{TemplateBinding Background}"
+                              Grid.ColumnSpan="4"
+                              Grid.RowSpan="2"
+                              Height="80"
+                              Name="placeholder" />
 
-                            <TextBlock Name="title"
-                                       Grid.Column="1"
-                                       Text="{TemplateBinding Title}"
-                                       Style="{ThemeResource RibbonTitleTextBlockStyle}" />
+                        <TextBlock Name="title"
+                                   Grid.Column="1"
+                                   Text="{TemplateBinding Title}"
+                                   Style="{ThemeResource RibbonTitleTextBlockStyle}" />
 
-                            <Rectangle Name="backgroundElement"
-                                       Grid.Column="1"
-                                       Grid.ColumnSpan="2"
-                                       Grid.RowSpan="2"
-                                       Height="80"
-                                       Fill="Transparent" />
+                        <Rectangle Name="backgroundElement"
+                                   Grid.Column="1"
+                                   Grid.ColumnSpan="2"
+                                   Grid.RowSpan="2"
+                                   Height="80"
+                                   Fill="Transparent" />
 
-                            <local:QuickAccessToolbarButton x:Name="backButton"
-                                                            ToolTipService.ToolTip="Назад"
-                                                            Style="{ThemeResource BackButtonStyle}"
-                                                            Visibility="{TemplateBinding BackButtonVisibility}" />
+                        <local:QuickAccessToolbarButton x:Name="backButton"
+                                                        ToolTipService.ToolTip="Назад"
+                                                        Style="{ThemeResource BackButtonStyle}"
+                                                        Visibility="{TemplateBinding BackButtonVisibility}" />
 
-                            <ContentPresenter Name="quickAccessToolbar"
-                                              Content="{TemplateBinding QuickAccessToolbar}" />
+                        <ContentPresenter Name="quickAccessToolbar"
+                                          Content="{TemplateBinding QuickAccessToolbar}" />
 
-                            <local:TitleBar x:Name="titleBar"
-                                            Grid.ColumnSpan="3" />
+                        <local:TitleBar x:Name="titleBar"
+                                        Grid.ColumnSpan="4" />
 
-                            <Grid Grid.Row="1"
-                                  Grid.ColumnSpan="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-
-                                <Button x:Name="menuButton"
-                                        Foreground="{TemplateBinding Foreground}"
-                                        Style="{ThemeResource MenuButtonStyle}" />
-
-                                <ListView Grid.Column="1"
-                                          Name="headersListView"
-                                          IsItemClickEnabled="True"
-                                          HorizontalAlignment="Left"
-                                          ItemContainerStyle="{ThemeResource RibbonTabListViewItemStyle}"
-                                          SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                          Height="48">
-                                    <ListView.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal" />
-                                        </ItemsPanelTemplate>
-                                    </ListView.ItemsPanel>
-
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Header}"
-                                                       Foreground="{Binding Foreground}"
-                                                       TextAlignment="Center" />
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                            </Grid>
-                        </Grid>
-                        
-                        <Grid Name="backstageGrid" Visibility="Collapsed">
+                        <Grid Grid.Row="1"
+                              Grid.ColumnSpan="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
 
-                            <Grid Background="{TemplateBinding Background}"
-                                  Height="32"
-                                  Name="backstagePlaceholder"
-                                  Grid.ColumnSpan="2" />
-                            
-                            <TextBlock Name="backstageTitle"
-                                       Text="{TemplateBinding Title}"
-                                       Style="{ThemeResource RibbonTitleTextBlockStyle}"
-                                       Grid.Column="1" />
+                            <Button x:Name="menuButton"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    Style="{ThemeResource MenuButtonStyle}" />
 
-                            <Rectangle Name="backstageBackgroundElement"
-                                       Height="32"
-                                       Grid.ColumnSpan="2"
-                                       Fill="Transparent" />
+                            <ListView Grid.Column="1"
+                                      Name="headersListView"
+                                      IsItemClickEnabled="True"
+                                      HorizontalAlignment="Left"
+                                      Style="{ThemeResource RibbonTabCollectionListView}"
+                                      ItemContainerStyle="{ThemeResource RibbonTabListViewItemStyle}"
+                                      SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Height="48">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
 
-                            <local:QuickAccessToolbarButton x:Name="backstageBackButton"
-                                                            Content="&#xE0A6;"
-                                                            ToolTipService.ToolTip="Назад" />
-
-                            <local:TitleBar x:Name="backstageTitleBar"
-                                            Grid.Column="1" />
-
-                            <Grid Grid.ColumnSpan="2"
-                                  Grid.Row="1">
-                                <ContentPresenter Content="{TemplateBinding Menu}" />
-                            </Grid>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Header}"
+                                                   Foreground="{Binding Foreground}"
+                                                   TextAlignment="Center" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
                         </Grid>
                     </Grid>
                 </ControlTemplate>
@@ -250,6 +211,81 @@
                                           VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                           AutomationProperties.AccessibilityView="Raw" />
                     </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Default style for Windows.UI.Xaml.Controls.ListView -->
+    <Style TargetType="ListView" x:Key="RibbonTabCollectionListView">
+        <Setter Property="IsTabStop"
+                Value="False" />
+        <Setter Property="TabNavigation"
+                Value="Once" />
+        <Setter Property="IsSwipeEnabled"
+                Value="True" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
+                Value="Disabled" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility"
+                Value="Auto" />
+        <Setter Property="ScrollViewer.HorizontalScrollMode"
+                Value="Disabled" />
+        <Setter Property="ScrollViewer.IsHorizontalRailEnabled"
+                Value="False" />
+        <Setter Property="ScrollViewer.VerticalScrollMode"
+                Value="Enabled" />
+        <Setter Property="ScrollViewer.IsVerticalRailEnabled"
+                Value="True" />
+        <Setter Property="ScrollViewer.ZoomMode"
+                Value="Disabled" />
+        <Setter Property="ScrollViewer.IsDeferredScrollingEnabled"
+                Value="False" />
+        <Setter Property="ScrollViewer.BringIntoViewOnFocusChange"
+                Value="True" />
+        <Setter Property="ItemContainerTransitions">
+            <Setter.Value>
+                <TransitionCollection>
+                    <AddDeleteThemeTransition />
+                    <ReorderThemeTransition />
+                </TransitionCollection>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <ItemsStackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListView">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ScrollViewer x:Name="ScrollViewer"
+                                      TabNavigation="{TemplateBinding TabNavigation}"
+                                      HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+                                      HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                      IsHorizontalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsHorizontalScrollChainingEnabled}"
+                                      VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                      IsVerticalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsVerticalScrollChainingEnabled}"
+                                      IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
+                                      IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
+                                      ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}"
+                                      IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                                      BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}"
+                                      AutomationProperties.AccessibilityView="Raw">
+                            <ItemsPresenter Header="{TemplateBinding Header}"
+                                            HeaderTemplate="{TemplateBinding HeaderTemplate}"
+                                            HeaderTransitions="{TemplateBinding HeaderTransitions}"
+                                            Footer="{TemplateBinding Footer}"
+                                            FooterTemplate="{TemplateBinding FooterTemplate}"
+                                            FooterTransitions="{TemplateBinding FooterTransitions}"
+                                            Padding="{TemplateBinding Padding}" />
+                        </ScrollViewer>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
