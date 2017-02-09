@@ -2,6 +2,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ms-appx:///OneTeam.Ribbon/Themes/Backstage.xaml" />
         <ResourceDictionary Source="ms-appx:///OneTeam.Ribbon/Themes/QuickAccessToolbar.xaml" />
         <ResourceDictionary Source="ms-appx:///OneTeam.Ribbon/Themes/QuickAccessToolbarButton.xaml" />
         <ResourceDictionary Source="ms-appx:///OneTeam.Ribbon/Themes/Ribbon.xaml" />
