@@ -10,7 +10,6 @@
     <ribbon:Backstage Background="{ThemeResource SystemControlBackgroundAccentBrush}"
                       Foreground="White"
                       Title="OneTeam.Ribbon.Test.App.BackstageView"
-                      IsTitleBarTabletModeVisible="False"
                       BackButtonClick="BackButtonClick">
 
     </ribbon:Backstage>

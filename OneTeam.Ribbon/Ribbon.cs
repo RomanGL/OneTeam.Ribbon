@@ -1,5 +1,4 @@
-﻿using System;
-using Windows.ApplicationModel;
+﻿using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.UI;
@@ -20,9 +19,7 @@ namespace OneTeam.Ribbon
         private TitleBar titleBar;
         private TextBlock title;
         private Grid placeholder;
-        private QuickAccessToolbarButton backButton;
         private FrameworkElement tabContentPresenter;
-        private Visibility backButtonVisibility;
         private bool isWindowDeactivated;
         private ContentPresenter quickAccessToolbar;
         private Button menuButton;
@@ -70,12 +67,6 @@ namespace OneTeam.Ribbon
             set { SetValue(IsTitleBarTabletModeVisibleProperty, value); }
         }
 
-        public Visibility BackButtonVisibility
-        {
-            get { return (Visibility)GetValue(BackButtonVisibilityProperty); }
-            set { SetValue(BackButtonVisibilityProperty, value); }
-        }
-
         public QuickAccessToolbar QuickAccessToolbar
         {
             get { return (QuickAccessToolbar)GetValue(QuickAccessToolbarProperty); }
@@ -112,10 +103,6 @@ namespace OneTeam.Ribbon
             DependencyProperty.Register(nameof(Title), typeof(string), 
                 typeof(Ribbon), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty BackButtonVisibilityProperty =
-            DependencyProperty.Register(nameof(BackButtonVisibility), typeof(Visibility),
-                typeof(Ribbon), new PropertyMetadata(Visibility.Collapsed));
-
         public static readonly DependencyProperty QuickAccessToolbarProperty =
             DependencyProperty.Register(nameof(QuickAccessToolbar), typeof(QuickAccessToolbar),
                 typeof(Ribbon), new PropertyMetadata(null));
@@ -130,14 +117,11 @@ namespace OneTeam.Ribbon
         {
             base.OnApplyTemplate();
 
-            backButtonVisibility = BackButtonVisibility;
-
             backgroundElement = GetTemplateChild(nameof(backgroundElement)) as Rectangle;
             headersListView = GetTemplateChild(nameof(headersListView)) as ListView;
             titleBar = GetTemplateChild(nameof(titleBar)) as TitleBar;
             title = GetTemplateChild(nameof(title)) as TextBlock;
             placeholder = GetTemplateChild(nameof(placeholder)) as Grid;
-            backButton = GetTemplateChild(nameof(backButton)) as QuickAccessToolbarButton;
             tabContentPresenter = GetTemplateChild(nameof(tabContentPresenter)) as FrameworkElement;
             quickAccessToolbar = GetTemplateChild(nameof(quickAccessToolbar)) as ContentPresenter;
             menuButton = GetTemplateChild(nameof(menuButton)) as Button;
@@ -182,8 +166,6 @@ namespace OneTeam.Ribbon
 
         private void CoreTitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
         {
-            BackButtonVisibility = sender.IsVisible ? backButtonVisibility : Visibility.Collapsed;
-
             if (IsTitleBarTabletModeVisible)
                 return;
 
@@ -208,13 +190,11 @@ namespace OneTeam.Ribbon
             if (e.WindowActivationState != CoreWindowActivationState.Deactivated)
             {
                 title.Opacity = 1;
-                backButton.Opacity = 1;
                 quickAccessToolbar.Opacity = 1;
             }
             else
             {
                 title.Opacity = 0.5;
-                backButton.Opacity = 0.5;
                 quickAccessToolbar.Opacity = 0.5;
             }
 
