@@ -1,5 +1,6 @@
 ﻿using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
+using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -10,7 +11,7 @@ using Windows.UI.Xaml.Shapes;
 
 namespace OneTeam.Ribbon
 {
-    public sealed class Backstage : Control
+    public sealed class Backstage : ItemsControl
     {
         private Rectangle backgroundElement;
         private CoreApplicationViewTitleBar coreTitleBar;
@@ -72,6 +73,8 @@ namespace OneTeam.Ribbon
             placeholder = GetTemplateChild(nameof(placeholder)) as Grid;
             backButton = GetTemplateChild(nameof(backButton)) as QuickAccessToolbarButton;
             backButton.Click += BackButton_Click;
+
+            InvalidateMeasure();
 
             if (!DesignMode.DesignModeEnabled)
             {
@@ -204,6 +207,12 @@ namespace OneTeam.Ribbon
         {
             var ribbon = d as Backstage;
             ribbon?.UpdateExtendIntoTitleBar();
+        }
+
+        protected override Size MeasureOverride(Size availableSize)
+        {
+            availableSize.Width = Window.Current.Bounds.Width;
+            return base.MeasureOverride(availableSize);
         }
     }
 }

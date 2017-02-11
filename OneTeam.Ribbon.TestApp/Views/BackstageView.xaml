@@ -11,6 +11,5 @@
                       Foreground="White"
                       Title="OneTeam.Ribbon.Test.App.BackstageView"
                       BackButtonClick="BackButtonClick">
-
     </ribbon:Backstage>
 </Page>

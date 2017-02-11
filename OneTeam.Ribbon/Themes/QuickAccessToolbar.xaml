@@ -1,6 +1,5 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:local="using:OneTeam.Ribbon">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:local="using:OneTeam.Ribbon">
 
     <Style TargetType="local:QuickAccessToolbar">
         <Setter Property="ItemsPanel">

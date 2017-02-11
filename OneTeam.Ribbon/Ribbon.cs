@@ -107,12 +107,6 @@ namespace OneTeam.Ribbon
             DependencyProperty.Register(nameof(QuickAccessToolbar), typeof(QuickAccessToolbar),
                 typeof(Ribbon), new PropertyMetadata(null));
 
-        protected override Size MeasureOverride(Size availableSize)
-        {
-            availableSize.Height = Window.Current.Bounds.Height;
-            return base.MeasureOverride(availableSize);
-        }
-
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -132,8 +126,6 @@ namespace OneTeam.Ribbon
 
             if (Items?.Count > 0)
                 SelectedIndex = 0;
-
-            InvalidateMeasure();
 
             if (!DesignMode.DesignModeEnabled)
             {
